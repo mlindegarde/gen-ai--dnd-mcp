@@ -70,84 +70,16 @@ impl PdfFiller {
         doc: &mut Document,
         character_data: &CharacterData,
     ) -> Result<(), PdfError> {
-        // Use the same direct approach as the working local test
+        let field_values = self.get_field_values(character_data);
+        
         for (object_id, object) in doc.objects.clone() {
             if let Object::Dictionary(dict) = object {
                 if let Ok(Object::String(field_name_bytes, _)) = dict.get(b"T") {
                     let field_name = String::from_utf8_lossy(&field_name_bytes);
                     
-                    let mut new_dict = dict.clone();
-                    let mut updated = false;
-                    
-                    // Character name
-                    if field_name == "CharacterName" {
-                        new_dict.set(b"V", Object::String(character_data.character.name.as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                        updated = true;
-                    }
-                    // Class & Level
-                    else if field_name == "ClassLevel" {
-                        let class_level = format!("{} {}", character_data.character.class, character_data.character.level);
-                        new_dict.set(b"V", Object::String(class_level.as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                        updated = true;
-                    }
-                    // Alignment
-                    else if field_name == "Alignment" {
-                        if let Some(alignment) = &character_data.character.alignment {
-                            new_dict.set(b"V", Object::String(alignment.as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                            updated = true;
-                        }
-                    }
-                    // Background
-                    else if field_name == "Background" {
-                        if let Some(background) = &character_data.character.background {
-                            new_dict.set(b"V", Object::String(background.as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                            updated = true;
-                        }
-                    }
-                    // Ability scores
-                    else if field_name == "STR" {
-                        new_dict.set(b"V", Object::String(character_data.abilities.strength.to_string().as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                        updated = true;
-                    }
-                    else if field_name == "DEX" {
-                        new_dict.set(b"V", Object::String(character_data.abilities.dexterity.to_string().as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                        updated = true;
-                    }
-                    else if field_name == "CON" {
-                        new_dict.set(b"V", Object::String(character_data.abilities.constitution.to_string().as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                        updated = true;
-                    }
-                    else if field_name == "INT" {
-                        new_dict.set(b"V", Object::String(character_data.abilities.intelligence.to_string().as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                        updated = true;
-                    }
-                    else if field_name == "WIS" {
-                        new_dict.set(b"V", Object::String(character_data.abilities.wisdom.to_string().as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                        updated = true;
-                    }
-                    else if field_name == "CHA" {
-                        new_dict.set(b"V", Object::String(character_data.abilities.charisma.to_string().as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                        updated = true;
-                    }
-                    // Combat stats
-                    else if field_name == "AC" {
-                        if let Some(combat) = &character_data.combat {
-                            if let Some(ac) = combat.armor_class {
-                                new_dict.set(b"V", Object::String(ac.to_string().as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                                updated = true;
-                            }
-                        }
-                    }
-                    else if field_name == "HPMax" {
-                        if let Some(combat) = &character_data.combat {
-                            if let Some(hp) = combat.hit_point_maximum {
-                                new_dict.set(b"V", Object::String(hp.to_string().as_bytes().to_vec(), lopdf::StringFormat::Literal));
-                                updated = true;
-                            }
-                        }
-                    }
-                    
-                    if updated {
+                    if let Some(value) = field_values.get(field_name.as_ref()) {
+                        let mut new_dict = dict.clone();
+                        new_dict.set(b"V", Object::String(value.as_bytes().to_vec(), lopdf::StringFormat::Literal));
                         doc.objects.insert(object_id, Object::Dictionary(new_dict));
                     }
                 }

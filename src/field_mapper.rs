@@ -75,6 +75,13 @@ impl FieldMapper {
         field_map.insert("gold_pieces".to_string(), "GP".to_string());
         field_map.insert("platinum_pieces".to_string(), "PP".to_string());
 
+        // Proficiency bonus
+        field_map.insert("proficiency_bonus".to_string(), "ProfBonus".to_string());
+
+        // Spell attack and save DC
+        field_map.insert("spell_attack_bonus".to_string(), "SpellAtkBonus".to_string());
+        field_map.insert("spell_save_dc".to_string(), "SpellSaveDC".to_string());
+
         Self { field_map }
     }
 
@@ -84,7 +91,7 @@ impl FieldMapper {
 
     pub fn get_spell_field_name(&self, level: u8, index: usize) -> String {
         match level {
-            0 => format!("Spells {}", 10100 + index), // Cantrips: 10100-101013
+            0 => format!("Spells {}", 1010 + index), // Cantrips: 1010-1017 (8 slots)
             1 => format!("Spells {}", 1014 + index),  // 1st level: 1014-1025
             2 => format!("Spells {}", 1026 + index),  // 2nd level: 1026-1038
             3 => format!("Spells {}", 1039 + index),  // 3rd level: 1039-1051
