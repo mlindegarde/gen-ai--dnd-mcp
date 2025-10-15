@@ -82,6 +82,17 @@ impl FieldMapper {
         field_map.insert("spell_attack_bonus".to_string(), "SpellAtkBonus".to_string());
         field_map.insert("spell_save_dc".to_string(), "SpellSaveDC".to_string());
 
+        // Spell slot counts
+        field_map.insert("spell_slots_1".to_string(), "L1".to_string());
+        field_map.insert("spell_slots_2".to_string(), "L2".to_string());
+        field_map.insert("spell_slots_3".to_string(), "L3".to_string());
+        field_map.insert("spell_slots_4".to_string(), "L4".to_string());
+        field_map.insert("spell_slots_5".to_string(), "L5".to_string());
+        field_map.insert("spell_slots_6".to_string(), "L6".to_string());
+        field_map.insert("spell_slots_7".to_string(), "L7".to_string());
+        field_map.insert("spell_slots_8".to_string(), "L8".to_string());
+        field_map.insert("spell_slots_9".to_string(), "L9".to_string());
+
         Self { field_map }
     }
 
@@ -91,16 +102,96 @@ impl FieldMapper {
 
     pub fn get_spell_field_name(&self, level: u8, index: usize) -> String {
         match level {
-            0 => format!("Spells {}", 1010 + index), // Cantrips: 1010-1017 (8 slots)
-            1 => format!("Spells {}", 1014 + index),  // 1st level: 1014-1025
-            2 => format!("Spells {}", 1026 + index),  // 2nd level: 1026-1038
-            3 => format!("Spells {}", 1039 + index),  // 3rd level: 1039-1051
-            4 => format!("Spells {}", 1052 + index),  // 4th level: 1052-1064
-            5 => format!("Spells {}", 1065 + index),  // 5th level: 1065-1077
-            6 => format!("Spells {}", 1078 + index),  // 6th level: 1078-1090
-            7 => format!("Spells {}", 1091 + index),  // 7th level: 1091-1103
-            8 => format!("Spells {}", 1104 + index),  // 8th level: 1104-1116
-            9 => format!("Spells {}", 1117 + index),  // 9th level: 1117-1129
+            0 => {
+                // Cantrips: 1014, 1016-1022
+                let cantrip_fields = [1014, 1016, 1017, 1018, 1019, 1020, 1021, 1022];
+                if index < cantrip_fields.len() {
+                    format!("Spells {}", cantrip_fields[index])
+                } else {
+                    format!("Spells {}", 1014 + index)
+                }
+            },
+            1 => {
+                // Level 1: 1015, 1023-1033
+                let level1_fields = [1015, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033];
+                if index < level1_fields.len() {
+                    format!("Spells {}", level1_fields[index])
+                } else {
+                    format!("Spells {}", 1015 + index)
+                }
+            },
+            2 => {
+                // Level 2: 1034-1046
+                let level2_fields = [1046, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045];
+                if index < level2_fields.len() {
+                    format!("Spells {}", level2_fields[index])
+                } else {
+                    format!("Spells {}", 1034 + index)
+                }
+            },
+            3 => {
+                // Level 3: 1047-1059
+                let level3_fields = [1048, 1047, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1059];
+                if index < level3_fields.len() {
+                    format!("Spells {}", level3_fields[index])
+                } else {
+                    format!("Spells {}", 1047 + index)
+                }
+            },
+            4 => {
+                // Level 4: 1060-1072
+                let level4_fields = [1061, 1060, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072];
+                if index < level4_fields.len() {
+                    format!("Spells {}", level4_fields[index])
+                } else {
+                    format!("Spells {}", 1060 + index)
+                }
+            },
+            5 => {
+                // Level 5: 1073-1081
+                let level5_fields = [1074, 1073, 1075, 1076, 1077, 1078, 1079, 1080, 1081];
+                if index < level5_fields.len() {
+                    format!("Spells {}", level5_fields[index])
+                } else {
+                    format!("Spells {}", 1073 + index)
+                }
+            },
+            6 => {
+                // Level 6: 1082-1090
+                let level6_fields = [1083, 1082, 1084, 1085, 1086, 1087, 1088, 1089, 1090];
+                if index < level6_fields.len() {
+                    format!("Spells {}", level6_fields[index])
+                } else {
+                    format!("Spells {}", 1082 + index)
+                }
+            },
+            7 => {
+                // Level 7: 1091-1099
+                let level7_fields = [1092, 1091, 1093, 1094, 1095, 1096, 1097, 1098, 1099];
+                if index < level7_fields.len() {
+                    format!("Spells {}", level7_fields[index])
+                } else {
+                    format!("Spells {}", 1091 + index)
+                }
+            },
+            8 => {
+                // Level 8: 10100-10106
+                let level8_fields = [10101, 10100, 10102, 10103, 10104, 10105, 10106];
+                if index < level8_fields.len() {
+                    format!("Spells {}", level8_fields[index])
+                } else {
+                    format!("Spells {}", 10100 + index)
+                }
+            },
+            9 => {
+                // Level 9: 10107-101013
+                let level9_fields = [10108, 10107, 10109, 101010, 101011, 101012, 101013];
+                if index < level9_fields.len() {
+                    format!("Spells {}", level9_fields[index])
+                } else {
+                    format!("Spells {}", 10107 + index)
+                }
+            },
             _ => format!("Unknown Spell Level {}", level),
         }
     }
