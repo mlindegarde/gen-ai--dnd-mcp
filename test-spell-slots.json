@@ -1,0 +1,16 @@
+{
+  "character": {
+    "name": "Spell Slot Test Wizard",
+    "class": "Wizard",
+    "level": 5,
+    "race": "Human"
+  },
+  "abilities": {
+    "strength": 10,
+    "dexterity": 14,
+    "constitution": 13,
+    "intelligence": 16,
+    "wisdom": 12,
+    "charisma": 8
+  }
+}

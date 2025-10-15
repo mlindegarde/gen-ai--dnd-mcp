@@ -6,6 +6,8 @@ A Model Context Protocol (MCP) server that fills D&D 5e character sheet PDFs wit
 
 ✅ **Complete D&D 5e Support**: Handles all character data including abilities, spells (cantrips through 9th level), proficiencies, combat stats, and narrative elements
 
+✅ **Spell Slot Tracking**: Automatically calculates and displays maximum spell slots for single-class characters based on D&D 5e progression tables
+
 ✅ **Rule Validation**: Validates character data against D&D 5e rules with optional override capability
 
 ✅ **MCP Protocol**: Full JSON-RPC 2.0 MCP server implementation for AI assistant integration

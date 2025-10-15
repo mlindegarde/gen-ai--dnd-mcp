@@ -82,16 +82,16 @@ impl FieldMapper {
         field_map.insert("spell_attack_bonus".to_string(), "SpellAtkBonus".to_string());
         field_map.insert("spell_save_dc".to_string(), "SpellSaveDC".to_string());
 
-        // Spell slot counts
-        field_map.insert("spell_slots_1".to_string(), "L1".to_string());
-        field_map.insert("spell_slots_2".to_string(), "L2".to_string());
-        field_map.insert("spell_slots_3".to_string(), "L3".to_string());
-        field_map.insert("spell_slots_4".to_string(), "L4".to_string());
-        field_map.insert("spell_slots_5".to_string(), "L5".to_string());
-        field_map.insert("spell_slots_6".to_string(), "L6".to_string());
-        field_map.insert("spell_slots_7".to_string(), "L7".to_string());
-        field_map.insert("spell_slots_8".to_string(), "L8".to_string());
-        field_map.insert("spell_slots_9".to_string(), "L9".to_string());
+        // Spell slot counts (corrected field names from PDF analysis)
+        field_map.insert("spell_slots_1".to_string(), "SlotsTotal 19".to_string());
+        field_map.insert("spell_slots_2".to_string(), "SlotsTotal 20".to_string());
+        field_map.insert("spell_slots_3".to_string(), "SlotsTotal 21".to_string());
+        field_map.insert("spell_slots_4".to_string(), "SlotsTotal 22".to_string());
+        field_map.insert("spell_slots_5".to_string(), "SlotsTotal 23".to_string());
+        field_map.insert("spell_slots_6".to_string(), "SlotsTotal 24".to_string());
+        field_map.insert("spell_slots_7".to_string(), "SlotsTotal 25".to_string());
+        field_map.insert("spell_slots_8".to_string(), "SlotsTotal 26".to_string());
+        field_map.insert("spell_slots_9".to_string(), "SlotsTotal 27".to_string());
 
         Self { field_map }
     }

@@ -16,9 +16,9 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Validate existing project structure matches plan.md requirements
-- [ ] T002 [P] Create test fixtures directory tests/fixtures/ for spell slot test data
-- [ ] T003 [P] Create integration test directory tests/integration/ for spell slot tests
+- [x] T001 Validate existing project structure matches plan.md requirements
+- [x] T002 [P] Create test fixtures directory tests/fixtures/ for spell slot test data
+- [x] T003 [P] Create integration test directory tests/integration/ for spell slot tests
 
 ---
 
@@ -28,10 +28,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 🚨 CRITICAL: Fix incorrect spell slot field mappings in src/field_mapper.rs (replace L1-L9 with SlotsTotal 19-27)
-- [ ] T005 [P] Add spell slot progression tables to src/spell_system.rs (full/half/third caster tables from research.md)
-- [ ] T006 [P] Add CasterType enum to src/spell_system.rs (Full, Half, Third, None variants)
-- [ ] T007 Implement get_caster_type() method in src/spell_system.rs for class classification
+- [x] T004 🚨 CRITICAL: Fix incorrect spell slot field mappings in src/field_mapper.rs (replace L1-L9 with SlotsTotal 19-27)
+- [x] T005 [P] Add spell slot progression tables to src/spell_system.rs (full/half/third caster tables from research.md)
+- [x] T006 [P] Add CasterType enum to src/spell_system.rs (Full, Half, Third, None variants)
+- [x] T007 Implement get_caster_type() method in src/spell_system.rs for class classification
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -45,13 +45,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T008 [P] [US1] Implement calculate_spell_slots() method in src/spell_system.rs returning HashMap<String, u8>
-- [ ] T009 [P] [US1] Implement get_spell_slots_for_single_class() helper method in src/spell_system.rs
-- [ ] T010 [US1] Integrate spell slot calculation into get_field_values() method in src/pdf_filler.rs
-- [ ] T011 [US1] Add spell slot field population logic to pdf_filler.rs (only populate non-zero slots)
-- [ ] T012 [P] [US1] Create spell slot test fixtures in tests/fixtures/spell-slot-characters.json
-- [ ] T013 [P] [US1] Create spell slot integration tests in tests/integration/spell_slot_tests.rs
-- [ ] T014 [US1] Add validation for spell slot display (non-casters show no fields, casters show correct counts)
+- [x] T008 [P] [US1] Implement calculate_spell_slots() method in src/spell_system.rs returning HashMap<String, u8>
+- [x] T009 [P] [US1] Implement get_spell_slots_for_single_class() helper method in src/spell_system.rs
+- [x] T010 [US1] Integrate spell slot calculation into get_field_values() method in src/pdf_filler.rs
+- [x] T011 [US1] Add spell slot field population logic to pdf_filler.rs (only populate non-zero slots)
+- [x] T012 [P] [US1] Create spell slot test fixtures in tests/fixtures/spell-slot-characters.json
+- [x] T013 [P] [US1] Create spell slot integration tests in tests/integration/spell_slot_tests.rs
+- [x] T014 [US1] Add validation for spell slot display (non-casters show no fields, casters show correct counts)
 
 **Checkpoint**: At this point, User Story 1 should be fully functional - spell slots display correctly for all character types
 
@@ -61,10 +61,10 @@
 
 **Purpose**: Improvements that affect the spell slot feature
 
-- [ ] T015 [P] Add error handling for invalid character classes in spell slot calculation
-- [ ] T016 [P] Add logging for spell slot calculation operations
-- [ ] T017 Validate implementation against quickstart.md test scenarios
-- [ ] T018 [P] Update documentation with spell slot feature details
+- [x] T015 [P] Add error handling for invalid character classes in spell slot calculation
+- [x] T016 [P] Add logging for spell slot calculation operations
+- [x] T017 Validate implementation against quickstart.md test scenarios
+- [x] T018 [P] Update documentation with spell slot feature details
 
 ---
 

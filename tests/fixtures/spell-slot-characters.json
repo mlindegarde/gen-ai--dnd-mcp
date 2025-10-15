@@ -1,0 +1,100 @@
+{
+  "wizard_level_5": {
+    "character": {
+      "name": "Test Wizard",
+      "class": "Wizard", 
+      "level": 5,
+      "race": "Human"
+    },
+    "abilities": {
+      "strength": 10,
+      "dexterity": 14,
+      "constitution": 13,
+      "intelligence": 16,
+      "wisdom": 12,
+      "charisma": 8
+    },
+    "expected_slots": {
+      "SlotsTotal 19": "4", 
+      "SlotsTotal 20": "3", 
+      "SlotsTotal 21": "2", 
+      "SlotsTotal 22": "0", 
+      "SlotsTotal 23": "0", 
+      "SlotsTotal 24": "0", 
+      "SlotsTotal 25": "0", 
+      "SlotsTotal 26": "0", 
+      "SlotsTotal 27": "0"
+    }
+  },
+  "paladin_level_5": {
+    "character": {
+      "name": "Test Paladin",
+      "class": "Paladin",
+      "level": 5,
+      "race": "Human"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 10,
+      "constitution": 14,
+      "intelligence": 8,
+      "wisdom": 12,
+      "charisma": 15
+    },
+    "expected_slots": {
+      "SlotsTotal 19": "4", 
+      "SlotsTotal 20": "2", 
+      "SlotsTotal 21": "0",
+      "SlotsTotal 22": "0", 
+      "SlotsTotal 23": "0", 
+      "SlotsTotal 24": "0", 
+      "SlotsTotal 25": "0", 
+      "SlotsTotal 26": "0", 
+      "SlotsTotal 27": "0"
+    }
+  },
+  "barbarian_level_5": {
+    "character": {
+      "name": "Test Barbarian",
+      "class": "Barbarian",
+      "level": 5,
+      "race": "Human"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 8,
+      "wisdom": 12,
+      "charisma": 10
+    },
+    "expected_slots": {}
+  },
+  "eldritch_knight_level_7": {
+    "character": {
+      "name": "Test Eldritch Knight",
+      "class": "Fighter",
+      "level": 7,
+      "race": "Human"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 14,
+      "wisdom": 12,
+      "charisma": 10
+    },
+    "expected_slots": {
+      "SlotsTotal 19": "4", 
+      "SlotsTotal 20": "2", 
+      "SlotsTotal 21": "0",
+      "SlotsTotal 22": "0", 
+      "SlotsTotal 23": "0", 
+      "SlotsTotal 24": "0", 
+      "SlotsTotal 25": "0", 
+      "SlotsTotal 26": "0", 
+      "SlotsTotal 27": "0"
+    }
+  }
+}

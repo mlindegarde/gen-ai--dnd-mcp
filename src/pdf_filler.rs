@@ -342,6 +342,16 @@ impl PdfFiller {
             }
         }
 
+        // Spell slot calculation and display
+        let spell_slots = crate::spell_system::SpellSystem::calculate_spell_slots(character_data);
+        for (logical_name, count) in spell_slots {
+            if let Some(field_name) = self.field_mapper.get_pdf_field_name(&logical_name) {
+                if count > 0 {  // Only show non-zero slots
+                    fields.insert(field_name.clone(), count.to_string());
+                }
+            }
+        }
+
         fields
     }
 
