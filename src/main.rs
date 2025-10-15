@@ -14,8 +14,7 @@ use mcp_server::McpServer;
 use std::collections::HashMap;
 use std::env;
 
-#[tokio::main]
-async fn main() {
+fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() > 1 && args[1] == "test" {
@@ -53,7 +52,7 @@ async fn main() {
     }
 
     let server = McpServer::new();
-    if let Err(e) = server.run().await {
+    if let Err(e) = server.run() {
         eprintln!("Server error: {}", e);
     }
 }
@@ -243,8 +242,8 @@ fn test_docs_data() -> Result<(), Box<dyn std::error::Error>> {
     // Create PDF filler
     let pdf_filler = pdf_filler::PdfFiller::new(false);
     
-    // Test with the existing PDF
-    let template_path = "test_character_sheet.pdf";
+    // Test with the same template as MCP server
+    let template_path = "docs/5E_CharacterSheet_Fillable.pdf";
     let output_path = "docs_test.pdf";
     
     match pdf_filler.fill_character_sheet(&character_data, template_path, output_path) {

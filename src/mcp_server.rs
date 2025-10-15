@@ -2,8 +2,7 @@ use crate::character_model::CharacterData;
 use crate::pdf_filler::PdfFiller;
 use serde_json::{json, Value};
 use std::fs::OpenOptions;
-use std::io::Write;
-use tokio::io::{self, AsyncBufReadExt, AsyncWriteExt, BufReader};
+use std::io::{self, BufRead, BufReader, Write};
 
 fn log_to_file(message: &str) {
     if let Ok(mut file) = OpenOptions::new()
@@ -31,67 +30,42 @@ impl McpServer {
         }
     }
 
-    pub async fn run(&self) -> io::Result<()> {
+    pub fn run(&self) -> io::Result<()> {
         log_to_file("MCP Server starting up");
 
         let stdin = io::stdin();
         let mut stdout = io::stdout();
-        let mut reader = BufReader::new(stdin);
-        let mut line = String::new();
+        let reader = BufReader::new(stdin);
 
         log_to_file("Entering main loop");
 
-        loop {
-            line.clear();
-            log_to_file("Waiting for next message...");
-            match reader.read_line(&mut line).await {
-                Ok(0) => {
-                    log_to_file("EOF received, breaking");
-                    break;
-                } // EOF
-                Ok(bytes_read) => {
-                    log_to_file(&format!("Read {} bytes", bytes_read));
-                    let trimmed = line.trim();
-                    if trimmed.is_empty() {
-                        log_to_file("Empty line, continuing");
-                        continue;
-                    }
+        for line in reader.lines() {
+            let line = line?;
+            let trimmed = line.trim();
+            
+            if trimmed.is_empty() {
+                continue;
+            }
 
-                    log_to_file(&format!("Processing line: {}", trimmed));
+            log_to_file(&format!("Processing line: {}", trimmed));
 
-                    if let Some(response) = self.handle_message(trimmed).await {
-                        let response_str = serde_json::to_string(&response).unwrap();
-                        log_to_file(&format!("Sending response: {}", response_str));
+            if let Some(response) = self.handle_message(trimmed) {
+                let response_str = serde_json::to_string(&response).unwrap();
+                log_to_file(&format!("Sending response: {}", response_str));
 
-                        if let Err(e) = stdout.write_all(response_str.as_bytes()).await {
-                            log_to_file(&format!("Error writing response: {}", e));
-                            break;
-                        }
-                        if let Err(e) = stdout.write_all(b"\n").await {
-                            log_to_file(&format!("Error writing newline: {}", e));
-                            break;
-                        }
-                        if let Err(e) = stdout.flush().await {
-                            log_to_file(&format!("Error flushing stdout: {}", e));
-                            break;
-                        }
-                        log_to_file("Response sent successfully, continuing loop");
-                    } else {
-                        log_to_file("No response to send, continuing loop");
-                    }
-                }
-                Err(e) => {
-                    log_to_file(&format!("Error reading: {}", e));
-                    break;
-                }
+                stdout.write_all(response_str.as_bytes())?;
+                stdout.write_all(b"\n")?;
+                stdout.flush()?;
+                
+                log_to_file("Response sent successfully");
             }
         }
 
-        log_to_file("MCP Server shutting down");
+        log_to_file("MCP Server shutting down cleanly");
         Ok(())
     }
 
-    async fn handle_message(&self, message: &str) -> Option<Value> {
+    fn handle_message(&self, message: &str) -> Option<Value> {
         log_to_file(&format!(
             "=== RAW MESSAGE ===\n{}\n=== END RAW MESSAGE ===",
             message
@@ -126,7 +100,7 @@ impl McpServer {
             Some("initialize") => Some(self.handle_initialize(id)),
             Some("initialized") | Some("notifications/initialized") => None, // No response needed for initialized notification
             Some("tools/list") => Some(self.handle_tools_list(id)),
-            Some("tools/call") => Some(self.handle_tools_call(id, &request).await),
+            Some("tools/call") => Some(self.handle_tools_call(id, &request)),
             Some(unknown_method) => {
                 log_to_file(&format!("Unknown method: {}", unknown_method));
                 log_to_file(&format!("Returning error with ID: {:?}", id));
@@ -192,7 +166,7 @@ impl McpServer {
         })
     }
 
-    async fn handle_tools_call(&self, id: Option<Value>, request: &Value) -> Value {
+    fn handle_tools_call(&self, id: Option<Value>, request: &Value) -> Value {
         let params = match request.get("params") {
             Some(p) => p,
             None => return self.error_response(id, -32602, "Invalid params", None),
@@ -209,12 +183,12 @@ impl McpServer {
         };
 
         match tool_name {
-            "fill_dnd_character_sheet" => self.handle_fill_character_sheet(id, arguments).await,
+            "fill_dnd_character_sheet" => self.handle_fill_character_sheet(id, arguments),
             _ => self.error_response(id, -32602, "Unknown tool", None),
         }
     }
 
-    async fn handle_fill_character_sheet(&self, id: Option<Value>, arguments: &Value) -> Value {
+    fn handle_fill_character_sheet(&self, id: Option<Value>, arguments: &Value) -> Value {
         log_to_file("Starting fill_character_sheet processing");
 
         // Parse character data

@@ -1,0 +1,49 @@
+=== D&D 5e CHARACTER SHEET ===
+
+Character Name: Erilon
+Class & Level: Wizard 6
+Race: High Elf
+Background: Soldier
+Alignment: Lawful Neutral
+Experience Points: 14000
+
+=== ABILITY SCORES ===
+Strength: 10 (0)
+Dexterity: 14 (2)
+Constitution: 12 (1)
+Intelligence: 18 (4)
+Wisdom: 12 (1)
+Charisma: 12 (1)
+
+=== COMBAT STATS ===
+Armor Class: 17
+Hit Points: 42
+Speed: 30 ft
+
+=== SPELLS ===
+Spellcasting Class: Wizard
+Spellcasting Ability: Intelligence
+
+Cantrips:
+  - Fire Bolt (Prepared)
+
+=== CHARACTER DETAILS ===
+Personality Traits: Test traits
+Ideals: Test ideals
+Bonds: Test bonds
+Flaws: Test flaws
+
+=== EQUIPMENT ===
+Currency: 0 cp, 0 sp, 0 ep, 544 gp, 0 pp
+Items: Test items
+
+=== CALCULATED VALUES ===
+PROFICIENCY BONUS: 3
+WISDOM MODIFIER: 1
+SPELL SAVE DC: 15
+INTELLIGENCE MODIFIER: 4
+SPELL ATTACK BONUS: 7
+CONSTITUTION MODIFIER: 1
+DEXTERITY MODIFIER: 2
+CHARISMA MODIFIER: 1
+STRENGTH MODIFIER: 0
