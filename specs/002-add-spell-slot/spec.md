@@ -9,7 +9,7 @@
 
 ### User Story 1 - Display Available Spell Slots (Priority: P1)
 
-D&D players need to see their current spell slots by level on their character sheet to know what spells they can cast during gameplay.
+D&D players need to see their maximum spell slots by level on their character sheet to know what spells they can cast during gameplay.
 
 **Why this priority**: Core functionality that enables basic spell slot management - without this, players cannot track their most fundamental spellcasting resource.
 
@@ -17,7 +17,7 @@ D&D players need to see their current spell slots by level on their character sh
 
 **Acceptance Scenarios**:
 
-1. **Given** a single-class spellcaster character with spell slots, **When** viewing their character sheet, **Then** all spell slot levels (1st through 9th) are displayed with current available counts
+1. **Given** a single-class spellcaster character with spell slots, **When** viewing their character sheet, **Then** all spell slot levels (1st through 9th) are displayed with maximum available counts
 2. **Given** a non-spellcaster character, **When** viewing their character sheet, **Then** no spell slot section appears
 3. **Given** a third-caster character (Eldritch Knight/Arcane Trickster), **When** viewing their character sheet, **Then** spell slots are calculated using third-caster progression
 
@@ -34,11 +34,9 @@ D&D players need to see their current spell slots by level on their character sh
 
 ### Functional Requirements
 
-- **FR-001**: System MUST calculate maximum spell slots based on character class and level according to D&D 5e rules
-- **FR-002**: System MUST display current available spell slots for each spell level (1st through 9th)
-- **FR-006**: System MUST handle single-class spellcaster slot calculations according to D&D 5e rules
+- **FR-001**: System MUST calculate and display maximum spell slots for single-class characters based on class and level according to D&D 5e rules
+- **FR-002**: System MUST show spell slots for each level (1st through 9th) on character sheets
 - **FR-007**: System MUST hide spell slot tracking for non-spellcasting characters
-- **FR-009**: System MUST update spell slot maximums when character level or class changes
 
 ### Key Entities
 
@@ -50,7 +48,7 @@ D&D players need to see their current spell slots by level on their character sh
 
 ### Measurable Outcomes
 
-- **SC-001**: Players can identify available spell slots for any level in under 5 seconds
+- **SC-001**: Players can locate maximum spell slots for any level on their character sheet
 - **SC-003**: System accurately calculates spell slots for all official D&D 5e single-class characters
 
 ## Assumptions *(mandatory)*
@@ -63,7 +61,7 @@ D&D players need to see their current spell slots by level on their character sh
 ## Dependencies *(mandatory)*
 
 - Existing character class and level data structure
-- D&D 5e spell slot progression tables and multiclassing rules
+- D&D 5e spell slot progression tables for single-class characters
 - Character data persistence system
 - PDF form field mapping for spell slot display
 

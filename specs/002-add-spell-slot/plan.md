@@ -7,7 +7,7 @@
 
 ## Summary
 
-Add display-only spell slot tracking to D&D 5e character sheets. Calculate maximum spell slots based on character class and level according to D&D 5e rules, including multiclass combinations. Display spell slot counts for levels 1-9 on PDF character sheets, hiding the section for non-spellcasting characters.
+Add display-only spell slot tracking to D&D 5e character sheets. Calculate maximum spell slots based on character class and level according to D&D 5e rules for single-class characters. Display spell slot counts for levels 1-9 on PDF character sheets, hiding the section for non-spellcasting characters.
 
 ## Technical Context
 
@@ -19,7 +19,7 @@ Add display-only spell slot tracking to D&D 5e character sheets. Calculate maxim
 **Project Type**: Single project (extends existing D&D character sheet filler)  
 **Performance Goals**: Calculate spell slots in <100ms  
 **Constraints**: Must integrate with existing PDF field mapping system  
-**Scale/Scope**: Support all official D&D 5e classes and multiclass combinations
+**Scale/Scope**: Support all official D&D 5e single-class characters
 
 ## Constitution Check
 
