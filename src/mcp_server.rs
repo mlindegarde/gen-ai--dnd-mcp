@@ -1,7 +1,8 @@
 use crate::character_model::CharacterData;
 use crate::pdf_filler::PdfFiller;
+use base64::{engine::general_purpose, Engine as _};
 use serde_json::{json, Value};
-use std::fs::OpenOptions;
+use std::fs::{self, OpenOptions};
 use std::io::{self, BufRead, BufReader, Write};
 
 fn log_to_file(message: &str) {
@@ -20,6 +21,7 @@ fn log_to_file(message: &str) {
 }
 
 pub struct McpServer {
+    #[allow(dead_code)]
     pdf_filler: PdfFiller,
 }
 
@@ -152,6 +154,11 @@ impl McpServer {
                                     "description": "Path where filled PDF should be saved",
                                     "default": "filled_character_sheet.pdf"
                                 },
+                                "return_pdf_content": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "Return the PDF file content as base64 for the LLM to save (WARNING: Large response)"
+                                },
                                 "allow_rule_violations": {
                                     "type": "boolean",
                                     "default": false,
@@ -220,6 +227,12 @@ impl McpServer {
             .and_then(|p| p.as_str())
             .unwrap_or("filled_character_sheet.pdf");
 
+        // Get return PDF content setting
+        let return_pdf_content = arguments
+            .get("return_pdf_content")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false);
+
         // Get rule violation setting
         let allow_violations = arguments
             .get("allow_rule_violations")
@@ -227,8 +240,8 @@ impl McpServer {
             .unwrap_or(false);
 
         log_to_file(&format!(
-            "Processing PDF: output_path={}, allow_violations={}",
-            output_path, allow_violations
+            "Processing PDF: output_path={}, allow_violations={}, return_content={}",
+            output_path, allow_violations, return_pdf_content
         ));
 
         // Create PDF filler with appropriate settings
@@ -245,8 +258,32 @@ impl McpServer {
                 let mut response_data = json!({
                     "success": true,
                     "output_file": result.output_file,
-                    "calculated_fields": result.calculated_fields
+                    "calculated_fields": result.calculated_fields,
+                    "message": format!("PDF character sheet created successfully at: {}", result.output_file)
                 });
+
+                // Include PDF content if requested (WARNING: Large response)
+                if return_pdf_content {
+                    match fs::read(&result.output_file) {
+                        Ok(pdf_bytes) => {
+                            // Check size limit (5MB for MCP response)
+                            if pdf_bytes.len() > 5 * 1024 * 1024 {
+                                log_to_file("PDF too large for content return");
+                                response_data["pdf_content_error"] = json!("PDF file too large (>5MB) for MCP response. File saved locally.");
+                                response_data["file_size"] = json!(pdf_bytes.len());
+                            } else {
+                                let base64_content = general_purpose::STANDARD.encode(&pdf_bytes);
+                                response_data["pdf_content"] = json!(base64_content);
+                                response_data["file_size"] = json!(pdf_bytes.len());
+                                log_to_file(&format!("PDF content encoded as base64, size: {} bytes", pdf_bytes.len()));
+                            }
+                        }
+                        Err(e) => {
+                            log_to_file(&format!("Failed to read PDF file: {}", e));
+                            response_data["pdf_content_error"] = json!(e.to_string());
+                        }
+                    }
+                }
 
                 if !result.validation_errors.is_empty() {
                     response_data["validation_errors"] = json!(result
@@ -264,20 +301,42 @@ impl McpServer {
                 }
 
                 log_to_file("Returning success response");
-                json!({
+                let final_response = json!({
                     "jsonrpc": "2.0",
                     "id": id,
-                    "result": response_data
-                })
+                    "result": {
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": format!("Character sheet created successfully at: {}", result.output_file)
+                            }
+                        ],
+                        "isError": false
+                    }
+                });
+                
+                log_to_file(&format!("Response structure: {}", 
+                    serde_json::to_string_pretty(&final_response)
+                        .unwrap_or_else(|_| "Failed to serialize".to_string())
+                ));
+                
+                final_response
             }
             Err(e) => {
                 log_to_file(&format!("PDF processing failed: {}", e));
-                self.error_response(
-                    id,
-                    -32603,
-                    "PDF processing failed",
-                    Some(json!({"error": e.to_string()})),
-                )
+                json!({
+                    "jsonrpc": "2.0",
+                    "id": id,
+                    "result": {
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": format!("Error: PDF processing failed - {}", e)
+                            }
+                        ],
+                        "isError": true
+                    }
+                })
             }
         }
     }

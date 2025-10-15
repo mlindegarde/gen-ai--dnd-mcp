@@ -3,6 +3,7 @@ use crate::character_model::{Spell, Spells};
 pub struct SpellSystem;
 
 impl SpellSystem {
+    #[allow(dead_code)]
     pub fn organize_spells_by_level(spells: &Spells) -> Vec<(u8, Vec<&Spell>)> {
         let mut organized = Vec::new();
 

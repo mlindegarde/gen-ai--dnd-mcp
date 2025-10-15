@@ -11,3 +11,4 @@ tokio = { version = "1.0", features = ["full"] }
 lopdf = "0.26"
 thiserror = "1.0"  # Enhanced error handling
 anyhow = "1.0"     # Error context and chaining
+base64 = "0.21"    # For encoding PDF content

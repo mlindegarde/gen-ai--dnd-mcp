@@ -21,6 +21,7 @@ pub enum ValidationError {
         level: u8,
         message: String,
     },
+    #[allow(dead_code)]
     Proficiency {
         skill: String,
         message: String,
@@ -67,8 +68,11 @@ impl fmt::Display for ValidationError {
 
 #[derive(Debug)]
 pub enum PdfError {
+    #[allow(dead_code)]
     FileNotFound(String),
+    #[allow(dead_code)]
     ParseError(String),
+    #[allow(dead_code)]
     FieldNotFound(String),
     WriteError(String),
 }

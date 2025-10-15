@@ -89,6 +89,7 @@ impl PdfFiller {
         Ok(())
     }
     
+    #[allow(dead_code)]
     fn update_form_fields(
         &self,
         doc: &mut Document,
@@ -114,6 +115,7 @@ impl PdfFiller {
         Ok(())
     }
 
+    #[allow(dead_code)]
     fn debug_spell_fields(&self, doc: &Document) -> Result<(), PdfError> {
         println!("=== SPELL FIELD NAMES IN PDF ===");
 
@@ -375,6 +377,7 @@ impl PdfFiller {
         ((ability_score as i16 - 10) / 2) as i8
     }
 
+    #[allow(dead_code)]
     fn generate_character_sheet_text(&self, character_data: &CharacterData) -> String {
         let mut content = String::new();
 
@@ -572,6 +575,7 @@ impl PdfFiller {
 
 #[derive(Debug)]
 pub struct FillResult {
+    #[allow(dead_code)]
     pub success: bool,
     pub output_file: String,
     pub validation_errors: Vec<ValidationError>,

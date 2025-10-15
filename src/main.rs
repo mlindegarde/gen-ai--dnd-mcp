@@ -55,6 +55,7 @@ fn main() {
     }
 }
 
+#[allow(dead_code)]
 fn extract_debug_fields() -> Result<(), Box<dyn std::error::Error>> {
     let doc = Document::load("debug-sheet.pdf")?;
     let mut field_values = HashMap::new();
@@ -261,7 +262,7 @@ fn read_pdf_fields(filename: &str) -> Result<(), Box<dyn std::error::Error>> {
     let doc = Document::load(filename)?;
 
     // Read all form field values
-    for (object_id, object) in &doc.objects {
+    for (_object_id, object) in &doc.objects {
         if let Object::Dictionary(dict) = object {
             if let Ok(Object::Name(subtype)) = dict.get(b"Subtype") {
                 if subtype == b"Widget" {

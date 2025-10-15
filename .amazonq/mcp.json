@@ -12,7 +12,10 @@
     },
     "dnd-character-sheet-filler": {
       "command": "/Users/lindegar/learningplace/specify--test/target/release/dnd-character-sheet-filler",
-      "args": []
+      "args": [],
+      "autoApprove": [
+        "fill_dnd_character_sheet"
+      ]
     }
   }
 }
