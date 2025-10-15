@@ -1,0 +1,356 @@
+{
+  "name": "fill_dnd_character_sheet",
+  "description": "Fills a D&D 5e character sheet PDF with provided character data including spells, proficiencies, and narrative elements",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "character_data": {
+        "type": "object",
+        "description": "Nested JSON containing complete D&D 5e character information",
+        "properties": {
+          "character": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string", "description": "Character name" },
+              "class": { "type": "string", "description": "Character class" },
+              "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+              "race": { "type": "string", "description": "Character race" },
+              "background": { "type": "string", "description": "Character background" },
+              "alignment": { "type": "string", "description": "Character alignment" },
+              "experience_points": { "type": "integer", "minimum": 0 }
+            },
+            "required": ["name", "class", "level", "race"]
+          },
+          "abilities": {
+            "type": "object",
+            "properties": {
+              "strength": { "type": "integer", "minimum": 1, "maximum": 20 },
+              "dexterity": { "type": "integer", "minimum": 1, "maximum": 20 },
+              "constitution": { "type": "integer", "minimum": 1, "maximum": 20 },
+              "intelligence": { "type": "integer", "minimum": 1, "maximum": 20 },
+              "wisdom": { "type": "integer", "minimum": 1, "maximum": 20 },
+              "charisma": { "type": "integer", "minimum": 1, "maximum": 20 }
+            },
+            "required": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
+          },
+          "skills": {
+            "type": "object",
+            "properties": {
+              "athletics": { "type": "integer" },
+              "athletics_proficient": { "type": "boolean", "default": false },
+              "acrobatics": { "type": "integer" },
+              "acrobatics_proficient": { "type": "boolean", "default": false },
+              "animal_handling": { "type": "integer" },
+              "animal_handling_proficient": { "type": "boolean", "default": false },
+              "arcana": { "type": "integer" },
+              "arcana_proficient": { "type": "boolean", "default": false },
+              "deception": { "type": "integer" },
+              "deception_proficient": { "type": "boolean", "default": false },
+              "history": { "type": "integer" },
+              "history_proficient": { "type": "boolean", "default": false },
+              "insight": { "type": "integer" },
+              "insight_proficient": { "type": "boolean", "default": false },
+              "intimidation": { "type": "integer" },
+              "intimidation_proficient": { "type": "boolean", "default": false },
+              "investigation": { "type": "integer" },
+              "investigation_proficient": { "type": "boolean", "default": false },
+              "medicine": { "type": "integer" },
+              "medicine_proficient": { "type": "boolean", "default": false },
+              "nature": { "type": "integer" },
+              "nature_proficient": { "type": "boolean", "default": false },
+              "perception": { "type": "integer" },
+              "perception_proficient": { "type": "boolean", "default": false },
+              "performance": { "type": "integer" },
+              "performance_proficient": { "type": "boolean", "default": false },
+              "persuasion": { "type": "integer" },
+              "persuasion_proficient": { "type": "boolean", "default": false },
+              "religion": { "type": "integer" },
+              "religion_proficient": { "type": "boolean", "default": false },
+              "sleight_of_hand": { "type": "integer" },
+              "sleight_of_hand_proficient": { "type": "boolean", "default": false },
+              "stealth": { "type": "integer" },
+              "stealth_proficient": { "type": "boolean", "default": false },
+              "survival": { "type": "integer" },
+              "survival_proficient": { "type": "boolean", "default": false }
+            }
+          },
+          "spells": {
+            "type": "object",
+            "properties": {
+              "cantrips": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 0 },
+                    "prepared": { "type": "boolean", "default": true }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "first_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 1 },
+                    "prepared": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "second_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 2 },
+                    "prepared": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "third_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 3 },
+                    "prepared": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "fourth_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 4 },
+                    "prepared": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "fifth_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 5 },
+                    "prepared": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "sixth_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 6 },
+                    "prepared": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "seventh_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 7 },
+                    "prepared": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "eighth_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 8 },
+                    "prepared": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "ninth_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "level": { "type": "integer", "const": 9 },
+                    "prepared": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              }
+            }
+          },
+          "spellcasting": {
+            "type": "object",
+            "properties": {
+              "spellcasting_ability": { 
+                "type": "string", 
+                "enum": ["Wisdom", "Intelligence", "Charisma"],
+                "description": "Primary spellcasting ability"
+              },
+              "spell_attack_bonus": { "type": "integer" },
+              "spell_save_dc": { "type": "integer", "minimum": 8 }
+            }
+          },
+          "proficiencies": {
+            "type": "object",
+            "properties": {
+              "armor": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Armor proficiencies"
+              },
+              "weapons": {
+                "type": "array", 
+                "items": { "type": "string" },
+                "description": "Weapon proficiencies"
+              },
+              "tools": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Tool proficiencies"
+              },
+              "languages": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Known languages"
+              }
+            }
+          },
+          "combat": {
+            "type": "object",
+            "properties": {
+              "armor_class": { "type": "integer", "minimum": 1 },
+              "initiative": { "type": "integer" },
+              "speed": { "type": "integer", "minimum": 0 },
+              "hit_point_maximum": { "type": "integer", "minimum": 1 },
+              "current_hit_points": { "type": "integer", "minimum": 0 }
+            }
+          },
+          "equipment": {
+            "type": "object",
+            "properties": {
+              "weapons": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "attack_bonus": { "type": "integer" },
+                    "damage": { "type": "string" }
+                  },
+                  "required": ["name"]
+                }
+              },
+              "currency": {
+                "type": "object",
+                "properties": {
+                  "copper": { "type": "integer", "minimum": 0 },
+                  "silver": { "type": "integer", "minimum": 0 },
+                  "gold": { "type": "integer", "minimum": 0 },
+                  "platinum": { "type": "integer", "minimum": 0 }
+                }
+              }
+            }
+          },
+          "narrative": {
+            "type": "object",
+            "properties": {
+              "personality_traits": { "type": "string" },
+              "ideals": { "type": "string" },
+              "bonds": { "type": "string" },
+              "flaws": { "type": "string" },
+              "character_appearance": { "type": "string" },
+              "additional_features_traits": { "type": "string" },
+              "treasure": { "type": "string" },
+              "character_backstory": { "type": "string" }
+            }
+          }
+        },
+        "required": ["character", "abilities"]
+      },
+      "pdf_template_path": {
+        "type": "string",
+        "description": "Path to the D&D 5e character sheet PDF template",
+        "default": "docs/5E_CharacterSheet_Fillable.pdf"
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Path where the filled PDF should be saved",
+        "default": "output/character_sheet.pdf"
+      },
+      "allow_rule_violations": {
+        "type": "boolean",
+        "description": "Whether to proceed with character data that violates D&D 5e rules",
+        "default": false
+      }
+    },
+    "required": ["character_data"]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean",
+        "description": "Whether the PDF was successfully filled"
+      },
+      "output_file": {
+        "type": "string",
+        "description": "Path to the generated PDF file"
+      },
+      "validation_errors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "field": { "type": "string" },
+            "error": { "type": "string" },
+            "severity": { "type": "string", "enum": ["warning", "error"] }
+          }
+        },
+        "description": "List of validation errors or warnings"
+      },
+      "calculated_fields": {
+        "type": "object",
+        "description": "Fields that were auto-calculated from base stats",
+        "additionalProperties": true
+      },
+      "spells_organized": {
+        "type": "object",
+        "description": "How spells were organized in the PDF by level",
+        "properties": {
+          "cantrips_placed": { "type": "integer" },
+          "first_level_placed": { "type": "integer" },
+          "second_level_placed": { "type": "integer" },
+          "third_level_placed": { "type": "integer" },
+          "fourth_level_placed": { "type": "integer" },
+          "fifth_level_placed": { "type": "integer" },
+          "sixth_level_placed": { "type": "integer" },
+          "seventh_level_placed": { "type": "integer" },
+          "eighth_level_placed": { "type": "integer" },
+          "ninth_level_placed": { "type": "integer" }
+        }
+      }
+    },
+    "required": ["success"]
+  }
+}

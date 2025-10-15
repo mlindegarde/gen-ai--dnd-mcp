@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "shinkuro": {
+      "command": "uvx",
+      "args": ["shinkuro"],
+      "env": {
+        "FOLDER": "./.shinkuro/prompts",
+        "VARIABLE_FORMAT": "dollar",
+        "AUTO_DISCOVER_ARGS": "true",
+        "SKIP_FRONTMATTER": "true"
+      }
+    },
+    "dnd-character-sheet-filler": {
+      "command": "/Users/lindegar/learningplace/specify--test/target/release/dnd-character-sheet-filler",
+      "args": []
+    }
+  }
+}

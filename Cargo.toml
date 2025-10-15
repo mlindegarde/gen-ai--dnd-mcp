@@ -1,0 +1,13 @@
+[package]
+name = "dnd-character-sheet-filler"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.0", features = ["full"] }
+lopdf = "0.26"
+thiserror = "1.0"  # Enhanced error handling
+anyhow = "1.0"     # Error context and chaining

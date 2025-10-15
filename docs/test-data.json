@@ -1,0 +1,149 @@
+{
+    "abilities": {
+        "charisma": 12,
+        "constitution": 12,
+        "dexterity": 14,
+        "intelligence": 18,
+        "strength": 10,
+        "wisdom": 12
+    },
+    "character": {
+        "alignment": "Lawful Neutral",
+        "background": "Soldier",
+        "class": "Wizard",
+        "experience_points": 14000,
+        "level": 6,
+        "name": "Erilon",
+        "player_name": "",
+        "race": "High Elf"
+    },
+    "combat": {
+        "armor_class": 17,
+        "current_hit_points": 42,
+        "hit_dice": "6d6",
+        "hit_dice_total": 6,
+        "hit_point_maximum": 42,
+        "initiative": 2,
+        "speed": 30,
+        "temporary_hit_points": 0
+    },
+    "equipment": {
+        "currency": {
+        "cp": 0,
+        "ep": 0,
+        "gp": 544,
+        "pp": 0,
+        "sp": 0
+        },
+        "items": "Ornate quarterstaff, Mithral Chain Mail, Cloak of Protection, Necklace of Fireballs (5 beads), Hat of Wizardry, Backpack, Bedroll, Dice set, Mess kit, 10 days of rations, 50 feet of hempen rope, Spellbook (primary), Spellbook copy (hidden), Tinderbox, 10 torches, Torn company banner remnant, Waterskin, Spell of Greater Healing, 2 Dragon's Teeth, Winter Wizard's Clothing"
+    },
+    "narrative": {
+        "bonds": "I would still lay down my life for the people I served with.",
+        "flaws": "I made a terrible mistake in battle that cost many lives, and I would do anything to keep that mistake secret.",
+        "ideals": "Might. In life as in war, the stronger force wins.",
+        "personality_traits": "I'm full of inspiring and cautionary tales from my military experience relevant to almost every combat situation."
+    },
+    "proficiencies": {
+        "saving_throws": [
+        "intelligence",
+        "wisdom"
+        ],
+        "skills": [
+        "arcana",
+        "athletics",
+        "history",
+        "intimidation",
+        "perception"
+        ]
+    },
+    "spells": {
+        "cantrips": [
+        {
+            "level": 0,
+            "name": "Fire Bolt",
+            "prepared": true
+        },
+        {
+            "level": 0,
+            "name": "Light",
+            "prepared": true
+        },
+        {
+            "level": 0,
+            "name": "Ray of Frost",
+            "prepared": true
+        },
+        {
+            "level": 0,
+            "name": "Mage Hand",
+            "prepared": true
+        }
+        ],
+        "eighth_level": [],
+        "fifth_level": [
+        {
+            "level": 5,
+            "name": "Wall of Stone",
+            "prepared": true
+        }
+        ],
+        "first_level": [
+        {
+            "level": 1,
+            "name": "Alarm",
+            "prepared": true
+        },
+        {
+            "level": 1,
+            "name": "Detect Magic",
+            "prepared": true
+        },
+        {
+            "level": 1,
+            "name": "Mage Armor",
+            "prepared": true
+        },
+        {
+            "level": 1,
+            "name": "Magic Missile",
+            "prepared": true
+        },
+        {
+            "level": 1,
+            "name": "Shield",
+            "prepared": true
+        }
+        ],
+        "fourth_level": [
+        {
+            "level": 4,
+            "name": "Banishment",
+            "prepared": true
+        }
+        ],
+        "ninth_level": [],
+        "second_level": [
+        {
+            "level": 2,
+            "name": "Misty Step",
+            "prepared": true
+        }
+        ],
+        "seventh_level": [],
+        "sixth_level": [],
+        "spellcasting_ability": "Intelligence",
+        "spellcasting_class": "Wizard",
+        "third_level": [
+        {
+            "level": 3,
+            "name": "Fireball",
+            "prepared": true
+        },
+        {
+            "level": 3,
+            "name": "Counterspell",
+            "prepared": true
+        }
+        ]
+    }
+}

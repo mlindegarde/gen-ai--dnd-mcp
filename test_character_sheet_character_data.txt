@@ -1,0 +1,54 @@
+=== D&D 5e CHARACTER SHEET ===
+
+Character Name: Thorin Ironforge
+Class & Level: Fighter 5
+Race: Mountain Dwarf
+Background: Soldier
+Alignment: Lawful Good
+Experience Points: 6500
+
+=== ABILITY SCORES ===
+Strength: 16 (3)
+Dexterity: 12 (1)
+Constitution: 15 (2)
+Intelligence: 10 (0)
+Wisdom: 13 (1)
+Charisma: 8 (-1)
+
+=== COMBAT STATS ===
+Armor Class: 18
+Hit Points: 47
+Speed: 25 ft
+
+=== SPELLS ===
+Spellcasting Class: Eldritch Knight
+Spellcasting Ability: Intelligence
+
+Cantrips:
+  - Mage Hand (Prepared)
+  - Prestidigitation (Prepared)
+
+Level 1 Spells:
+  - Shield (Prepared)
+  - Magic Missile (Prepared)
+
+=== CHARACTER DETAILS ===
+Personality Traits: I face problems head-on. A simple, direct solution is the best path to success.
+Ideals: Responsibility. I do what I must and obey just authority.
+Bonds: I fight for those who cannot fight for themselves.
+Flaws: I have little respect for anyone who is not a proven warrior.
+
+=== EQUIPMENT ===
+Currency: 0 cp, 0 sp, 0 ep, 150 gp, 0 pp
+Items: Chain mail, shield, warhammer, handaxe (2), light crossbow, crossbow bolts (20), explorer's pack
+
+=== CALCULATED VALUES ===
+STRENGTH MODIFIER: 3
+PROFICIENCY BONUS: 3
+SPELL ATTACK BONUS: 3
+CONSTITUTION MODIFIER: 2
+SPELL SAVE DC: 11
+INTELLIGENCE MODIFIER: 0
+DEXTERITY MODIFIER: 1
+WISDOM MODIFIER: 1
+CHARISMA MODIFIER: -1

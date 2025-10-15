@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "dnd-character-sheet-filler": {
+      "command": "cargo",
+      "args": ["run"],
+      "cwd": "/Users/lindegar/learningplace/specify--test"
+    }
+  }
+}

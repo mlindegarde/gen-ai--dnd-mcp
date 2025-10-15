@@ -1,0 +1,59 @@
+{
+  "valid_characters": [
+    {
+      "name": "Valid Fighter",
+      "character": {
+        "name": "Thorin",
+        "class": "Fighter",
+        "level": 5,
+        "race": "Dwarf"
+      },
+      "abilities": {
+        "strength": 16,
+        "dexterity": 12,
+        "constitution": 15,
+        "intelligence": 10,
+        "wisdom": 13,
+        "charisma": 8
+      }
+    }
+  ],
+  "invalid_characters": [
+    {
+      "name": "Invalid Ability Scores",
+      "character": {
+        "name": "Overpowered",
+        "class": "Fighter",
+        "level": 1,
+        "race": "Human"
+      },
+      "abilities": {
+        "strength": 25,
+        "dexterity": 0,
+        "constitution": 15,
+        "intelligence": 10,
+        "wisdom": 13,
+        "charisma": 8
+      },
+      "expected_errors": ["Strength score 25 must be between 1 and 20", "Dexterity score 0 must be between 1 and 20"]
+    },
+    {
+      "name": "Invalid Level",
+      "character": {
+        "name": "Invalid Level",
+        "class": "Fighter", 
+        "level": 25,
+        "race": "Human"
+      },
+      "abilities": {
+        "strength": 15,
+        "dexterity": 14,
+        "constitution": 13,
+        "intelligence": 12,
+        "wisdom": 10,
+        "charisma": 8
+      },
+      "expected_errors": ["Character level 25 must be between 1 and 20"]
+    }
+  ]
+}

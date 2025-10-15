@@ -1,0 +1,107 @@
+{
+  "tool": "fill_dnd_character_sheet",
+  "description": "Fills a D&D 5e character sheet PDF with provided character data including spells, proficiencies, and narrative elements",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "character_data": {
+        "type": "object",
+        "description": "Complete D&D 5e character information",
+        "required": true
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Path where filled PDF should be saved",
+        "default": "filled_character_sheet.pdf"
+      },
+      "allow_rule_violations": {
+        "type": "boolean",
+        "description": "Allow character data that violates D&D 5e rules",
+        "default": false
+      }
+    },
+    "required": ["character_data"]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean",
+        "description": "Whether the PDF was successfully created and saved"
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Actual path where the PDF file was saved"
+      },
+      "file_size_bytes": {
+        "type": "integer",
+        "description": "Size of the generated PDF file in bytes"
+      },
+      "validation_results": {
+        "type": "object",
+        "properties": {
+          "character_valid": {
+            "type": "boolean",
+            "description": "Whether character data passed D&D 5e validation"
+          },
+          "pdf_integrity_valid": {
+            "type": "boolean", 
+            "description": "Whether saved PDF passed integrity checks"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Non-fatal validation warnings"
+          }
+        }
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["InvalidPath", "PermissionDenied", "DiskSpaceFull", "DirectoryCreationFailed", "PdfWriteFailed", "IntegrityCheckFailed"],
+            "description": "Specific error category"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error description"
+          },
+          "suggestions": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Actionable suggestions for resolving the error"
+          }
+        }
+      }
+    },
+    "required": ["success"]
+  },
+  "errorHandling": {
+    "pathValidation": {
+      "description": "Validates output path before attempting file operations",
+      "checks": [
+        "Path format valid for operating system",
+        "Parent directory exists or can be created", 
+        "Write permissions available",
+        "Sufficient disk space"
+      ]
+    },
+    "fileOperations": {
+      "description": "Handles filesystem errors during PDF writing",
+      "recovery": [
+        "Create parent directories if missing",
+        "Provide specific error messages for permission issues",
+        "Suggest alternative paths for space/permission problems"
+      ]
+    },
+    "pdfIntegrity": {
+      "description": "Verifies saved PDF file is valid and complete",
+      "validation": [
+        "File exists and has non-zero size",
+        "PDF structure is valid and readable",
+        "All form fields were properly filled"
+      ]
+    }
+  }
+}

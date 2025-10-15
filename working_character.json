@@ -1,0 +1,20 @@
+{
+  "character": {
+    "name": "Bob",
+    "class": "Wizard",
+    "level": 6,
+    "background": "Scholar",
+    "player_name": "Test Player",
+    "race": "Human",
+    "alignment": "Chaotic Evil",
+    "experience_points": 14000
+  },
+  "abilities": {
+    "strength": 10,
+    "dexterity": 14,
+    "constitution": 12,
+    "intelligence": 16,
+    "wisdom": 13,
+    "charisma": 8
+  }
+}

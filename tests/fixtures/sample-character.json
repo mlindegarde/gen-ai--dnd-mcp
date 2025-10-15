@@ -1,0 +1,56 @@
+{
+  "character": {
+    "name": "Thorin Ironforge",
+    "class": "Fighter",
+    "level": 5,
+    "background": "Soldier",
+    "player_name": "Alex",
+    "race": "Mountain Dwarf",
+    "alignment": "Lawful Good",
+    "experience_points": 6500
+  },
+  "abilities": {
+    "strength": 16,
+    "dexterity": 12,
+    "constitution": 15,
+    "intelligence": 10,
+    "wisdom": 13,
+    "charisma": 8
+  },
+  "proficiencies": {
+    "saving_throws": ["strength", "constitution"],
+    "skills": ["athletics", "intimidation", "perception", "survival"]
+  },
+  "combat": {
+    "armor_class": 18,
+    "initiative": 1,
+    "speed": 25,
+    "hit_point_maximum": 47,
+    "current_hit_points": 47,
+    "temporary_hit_points": 0,
+    "hit_dice": "5d10",
+    "hit_dice_total": 5
+  },
+  "spells": {
+    "spellcasting_class": "Eldritch Knight",
+    "spellcasting_ability": "Intelligence",
+    "cantrips": [
+      {"name": "Mage Hand", "level": 0, "prepared": true},
+      {"name": "Prestidigitation", "level": 0, "prepared": true}
+    ],
+    "first_level": [
+      {"name": "Shield", "level": 1, "prepared": true},
+      {"name": "Magic Missile", "level": 1, "prepared": true}
+    ]
+  },
+  "narrative": {
+    "personality_traits": "I face problems head-on. A simple, direct solution is the best path to success.",
+    "ideals": "Responsibility. I do what I must and obey just authority.",
+    "bonds": "I fight for those who cannot fight for themselves.",
+    "flaws": "I have little respect for anyone who is not a proven warrior."
+  },
+  "equipment": {
+    "currency": {"cp": 0, "sp": 0, "ep": 0, "gp": 150, "pp": 0},
+    "items": "Chain mail, shield, warhammer, handaxe (2), light crossbow, crossbow bolts (20), explorer's pack"
+  }
+}
