@@ -38,8 +38,8 @@ Phase 1 (Setup) → Phase 2 (US1) → Phase 3 (US2)
 ### Goal
 Prepare existing codebase for spellcasting header functionality by adding required PDF field mappings.
 
-- [ ] T001 Add spellcasting class field mapping to src/field_mapper.rs
-- [ ] T002 Add spellcasting ability field mapping to src/field_mapper.rs
+- [x] T001 Add spellcasting class field mapping to src/field_mapper.rs
+- [x] T002 Add spellcasting ability field mapping to src/field_mapper.rs
 
 **Completion Criteria**: Field mappings added for all 4 spellcasting header fields
 
@@ -55,10 +55,10 @@ Implement core spellcasting header calculations for spellcasting classes (Wizard
 
 ### Tasks
 
-- [ ] T003 [US1] Implement class-to-ability mapping function in src/pdf_filler.rs
-- [ ] T004 [US1] Implement spellcasting header calculations in src/pdf_filler.rs
-- [ ] T005 [US1] Integrate spellcasting header population into PDF filling workflow in src/pdf_filler.rs
-- [ ] T006 [US1] Add unit tests for spellcasting header calculations in tests/unit/pdf_filler_tests.rs
+- [x] T003 [US1] Implement class-to-ability mapping function in src/pdf_filler.rs
+- [x] T004 [US1] Implement spellcasting header calculations in src/pdf_filler.rs
+- [x] T005 [US1] Integrate spellcasting header population into PDF filling workflow in src/pdf_filler.rs
+- [x] T006 [US1] Add unit tests for spellcasting header calculations in tests/integration/spellcasting_header_tests.rs
 
 **Completion Criteria**: All spellcasting classes correctly populate header fields with accurate D&D 5e calculations
 
@@ -74,8 +74,8 @@ Ensure non-spellcasting classes (Fighter, Rogue, etc.) leave spellcasting header
 
 ### Tasks
 
-- [ ] T007 [US2] Extend class-to-ability mapping to handle non-spellcasting classes in src/pdf_filler.rs
-- [ ] T008 [US2] Add unit tests for non-spellcaster handling in tests/unit/pdf_filler_tests.rs
+- [x] T007 [US2] Extend class-to-ability mapping to handle non-spellcasting classes in src/pdf_filler.rs
+- [x] T008 [US2] Add unit tests for non-spellcaster handling in tests/integration/spellcasting_header_tests.rs
 
 **Completion Criteria**: Non-spellcasting classes gracefully handled with empty header fields
 

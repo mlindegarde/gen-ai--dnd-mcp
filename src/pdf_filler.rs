@@ -154,7 +154,7 @@ impl PdfFiller {
         Ok(())
     }
 
-    fn get_field_values(&self, character_data: &CharacterData) -> HashMap<String, String> {
+    pub fn get_field_values(&self, character_data: &CharacterData) -> HashMap<String, String> {
         let mut fields = HashMap::new();
 
         // Basic character info using field mapper
@@ -317,6 +317,16 @@ impl PdfFiller {
                 fields.insert(field_name.clone(), spell_save_dc.to_string());
             }
 
+            // Spellcasting header fields
+            if let Some(field_name) = self.field_mapper.get_pdf_field_name("spellcasting_class") {
+                fields.insert(field_name.clone(), character.class.clone());
+            }
+            if let Some(ability_name) = &spells.spellcasting_ability {
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("spellcasting_ability") {
+                    fields.insert(field_name.clone(), ability_name.clone());
+                }
+            }
+
             // Individual spells by level using proper field mapper
             self.add_spell_fields_with_mapper(&mut fields, 0, &spells.cantrips);
             self.add_spell_fields_with_mapper(&mut fields, 1, &spells.first_level);
@@ -328,6 +338,41 @@ impl PdfFiller {
             self.add_spell_fields_with_mapper(&mut fields, 7, &spells.seventh_level);
             self.add_spell_fields_with_mapper(&mut fields, 8, &spells.eighth_level);
             self.add_spell_fields_with_mapper(&mut fields, 9, &spells.ninth_level);
+        } else {
+            // Handle characters without existing spell data - determine spellcasting from class
+            let spellcasting_ability = match character.class.as_str() {
+                "Wizard" | "Eldritch Knight" | "Arcane Trickster" => Some("Intelligence"),
+                "Cleric" | "Druid" | "Ranger" => Some("Wisdom"),
+                "Sorcerer" | "Bard" | "Paladin" => Some("Charisma"),
+                _ => None, // Non-spellcaster
+            };
+
+            if let Some(ability) = spellcasting_ability {
+                // Calculate spellcasting stats
+                let spell_mod = match ability {
+                    "Intelligence" => self.calculate_modifier(abilities.intelligence),
+                    "Wisdom" => self.calculate_modifier(abilities.wisdom),
+                    "Charisma" => self.calculate_modifier(abilities.charisma),
+                    _ => 0,
+                };
+                let spell_attack = spell_mod + prof_bonus;
+                let spell_save_dc = 8 + spell_mod + prof_bonus;
+
+                // Populate spellcasting header fields
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("spellcasting_class") {
+                    fields.insert(field_name.clone(), character.class.clone());
+                }
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("spellcasting_ability") {
+                    fields.insert(field_name.clone(), ability.to_string());
+                }
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("spell_attack_bonus") {
+                    fields.insert(field_name.clone(), format!("+{}", spell_attack));
+                }
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("spell_save_dc") {
+                    fields.insert(field_name.clone(), spell_save_dc.to_string());
+                }
+            }
+            // Non-spellcasters: leave spellcasting header fields empty (no action needed)
         }
 
         // Character narrative using narrative handler

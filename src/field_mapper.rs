@@ -78,9 +78,13 @@ impl FieldMapper {
         // Proficiency bonus
         field_map.insert("proficiency_bonus".to_string(), "ProfBonus".to_string());
 
-        // Spell attack and save DC
-        field_map.insert("spell_attack_bonus".to_string(), "SpellAtkBonus".to_string());
-        field_map.insert("spell_save_dc".to_string(), "SpellSaveDC".to_string());
+        // Spell attack and save DC (updated field names from debug sheet analysis)
+        field_map.insert("spell_attack_bonus".to_string(), "SpellAtkBonus 2".to_string());
+        field_map.insert("spell_save_dc".to_string(), "SpellSaveDC  2".to_string()); // Note: extra space before 2
+        
+        // Spellcasting header fields
+        field_map.insert("spellcasting_class".to_string(), "Spellcasting Class 2".to_string());
+        field_map.insert("spellcasting_ability".to_string(), "SpellcastingAbility 2".to_string());
 
         // Spell slot counts (corrected field names from PDF analysis)
         field_map.insert("spell_slots_1".to_string(), "SlotsTotal 19".to_string());
