@@ -23,8 +23,7 @@ When using the `fill_dnd_character_sheet` tool, format character data exactly as
     "background": "Background Name",
     "player_name": "Player Name (optional)",
     "race": "Race Name",
-    "alignment": "Alignment",
-    "experience_points": 14000
+    "alignment": "Alignment"
   },
   "abilities": {
     "strength": 10,
@@ -76,6 +75,7 @@ When using the `fill_dnd_character_sheet` tool, format character data exactly as
 ```
 
 Key requirements:
+- XP should be ignored, we do not use that in our campaign
 - All spell levels (cantrips through ninth_level) must be present, even if empty arrays
 - Skills and saving throws use lowercase ability names
 - Currency uses abbreviated keys: cp, sp, ep, gp, pp
