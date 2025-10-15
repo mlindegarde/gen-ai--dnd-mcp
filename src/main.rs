@@ -6,8 +6,6 @@ mod mcp_server;
 mod narrative_handler;
 mod pdf_filler;
 mod spell_system;
-mod lib;
-mod models;
 
 use lopdf::{Document, Object};
 use mcp_server::McpServer;
