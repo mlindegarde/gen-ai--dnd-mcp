@@ -10,7 +10,7 @@
         "SKIP_FRONTMATTER": "true"
       }
     },
-    "dnd-character-sheet-filler": {
+    "D&D Assistant": {
       "command": "/Users/lindegar/learningplace/specify--test/target/release/dnd-character-sheet-filler",
       "args": [],
       "autoApprove": [

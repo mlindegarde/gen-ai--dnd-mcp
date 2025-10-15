@@ -126,7 +126,7 @@ impl McpServer {
                     "tools": {}
                 },
                 "serverInfo": {
-                    "name": "dnd-character-sheet-filler",
+                    "name": "D&D Assistant",
                     "version": "1.0.0"
                 }
             }
