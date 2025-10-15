@@ -1,6 +1,0 @@
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
-     Running `target/debug/dnd-character-sheet-filler read docs/5E_CharacterSheet_Fillable.pdf`
-Field 'Spells 1014' = 'Cantrip 1
-'
-Field 'Spells 1014' = 'Cantrip 1
-'
