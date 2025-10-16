@@ -25,16 +25,16 @@ A D&D player wants their character's saving throw bonuses automatically calculat
 
 ### User Story 2 - Skills Population with Proficiency (Priority: P2)
 
-A D&D player wants their character's skill bonuses automatically calculated and filled into the PDF, including proficiency bonuses and expertise multipliers where applicable.
+A D&D player wants their character's skill bonuses automatically calculated and filled into the PDF, including proficiency bonuses where applicable.
 
 **Why this priority**: Skills are used frequently in gameplay and require complex calculations that benefit from automation.
 
-**Independent Test**: Can be tested by providing character data with various skill proficiencies and expertise, then verifying PDF shows correct skill bonuses.
+**Independent Test**: Can be tested by providing character data with various skill proficiencies, then verifying PDF shows correct skill bonuses.
 
 **Acceptance Scenarios**:
 
 1. **Given** a character proficient in Athletics (Strength-based) with Strength 16 (+3), **When** the PDF is filled, **Then** Athletics shows +6 (ability modifier + proficiency bonus)
-2. **Given** a character with expertise in Stealth (Dexterity-based) with Dexterity 14 (+2), **When** the PDF is filled, **Then** Stealth shows +8 (ability modifier + double proficiency bonus)
+2. **Given** a character proficient in Stealth (Dexterity-based) with Dexterity 14 (+2), **When** the PDF is filled, **Then** Stealth shows +5 (ability modifier + proficiency bonus)
 3. **Given** a character not proficient in History (Intelligence-based) with Intelligence 12 (+1), **When** the PDF is filled, **Then** History shows +1 (ability modifier only)
 
 ---
@@ -51,7 +51,6 @@ A D&D player wants visual indicators (filled circles or checkmarks) on their cha
 
 1. **Given** a character proficient in Dexterity and Wisdom saving throws, **When** the PDF is filled, **Then** only those saving throw proficiency indicators are marked
 2. **Given** a character proficient in Perception and Investigation skills, **When** the PDF is filled, **Then** only those skill proficiency indicators are marked
-3. **Given** a character with expertise in Thieves' Tools, **When** the PDF is filled, **Then** the expertise indicator is marked for that skill
 
 ---
 
@@ -95,23 +94,21 @@ A D&D spellcaster wants their prepared spells visually indicated on the characte
 
 - **FR-001**: System MUST calculate saving throw bonuses using ability modifiers plus proficiency bonus when proficient
 - **FR-002**: System MUST calculate skill bonuses using appropriate ability modifiers plus proficiency bonus when proficient
-- **FR-003**: System MUST apply double proficiency bonus for skills with expertise
-- **FR-004**: System MUST determine proficiency bonus based on character level using D&D 5e progression table (single-class characters only, levels 1-20)
-- **FR-005**: System MUST populate all six saving throw fields (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma)
-- **FR-006**: System MUST populate all eighteen standard skill fields with calculated bonuses
-- **FR-007**: System MUST mark proficiency indicators by filling existing checkbox/circle fields in the PDF form for saving throws and skills where character is proficient
-- **FR-008**: System MUST mark expertise indicators by filling existing checkbox/circle fields in the PDF form for skills where character has expertise
-- **FR-009**: System MUST handle negative ability modifiers correctly in calculations
-- **FR-010**: System MUST validate that required ability scores are present before attempting calculations
-- **FR-011**: System MUST skip calculations for missing or invalid data while displaying clear error indicators in affected fields
-- **FR-012**: System MUST complete all valid calculations even when some data is problematic
-- **FR-013**: System MUST NOT support multiclass characters (out of scope for this feature)
-- **FR-014**: System MUST use only standard D&D 5e skill-to-ability mappings (no custom ability assignments)
-- **FR-015**: System MUST mark spell preparation checkboxes for prepared spells using systematically mapped checkbox fields
-- **FR-016**: System MUST support spell preparation marking for spell levels 1-9 using verified checkbox field mappings
-- **FR-017**: System MUST NOT mark preparation checkboxes for cantrips (0th level spells) as they do not require preparation
-- **FR-018**: System MUST handle cases where more spells are prepared than available checkbox fields by marking available fields only
-- **FR-019**: System MUST skip spell preparation marking when spell data is missing or invalid while continuing other processing
+- **FR-003**: System MUST determine proficiency bonus based on character level using D&D 5e progression table (single-class characters only, levels 1-20)
+- **FR-004**: System MUST populate all six saving throw fields (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma)
+- **FR-005**: System MUST populate all eighteen standard skill fields with calculated bonuses
+- **FR-006**: System MUST mark proficiency indicators by filling existing checkbox/circle fields in the PDF form for saving throws and skills where character is proficient
+- **FR-007**: System MUST handle negative ability modifiers correctly in calculations
+- **FR-008**: System MUST validate that required ability scores are present before attempting calculations
+- **FR-009**: System MUST skip calculations for missing or invalid data while displaying clear error indicators in affected fields
+- **FR-010**: System MUST complete all valid calculations even when some data is problematic
+- **FR-011**: System MUST NOT support multiclass characters (out of scope for this feature)
+- **FR-012**: System MUST use only standard D&D 5e skill-to-ability mappings (no custom ability assignments)
+- **FR-013**: System MUST mark spell preparation checkboxes for prepared spells using systematically mapped checkbox fields
+- **FR-014**: System MUST support spell preparation marking for spell levels 1-9 using verified checkbox field mappings
+- **FR-015**: System MUST NOT mark preparation checkboxes for cantrips (0th level spells) as they do not require preparation
+- **FR-016**: System MUST handle cases where more spells are prepared than available checkbox fields by marking available fields only
+- **FR-017**: System MUST skip spell preparation marking when spell data is missing or invalid while continuing other processing
 
 ### Error Handling
 
@@ -123,9 +120,9 @@ A D&D spellcaster wants their prepared spells visually indicated on the characte
 
 ### Key Entities
 
-- **Character**: Contains ability scores, level, proficiencies, expertise selections, and prepared spells
+- **Character**: Contains ability scores, level, proficiencies, and prepared spells
 - **Saving Throw**: Links to specific ability score, has proficiency status, displays calculated bonus
-- **Skill**: Links to specific ability score, has proficiency/expertise status, displays calculated bonus
+- **Skill**: Links to specific ability score, has proficiency status, displays calculated bonus
 - **Proficiency Bonus**: Derived from character level using D&D 5e progression table
 - **Prepared Spell**: Links to specific spell level, has preparation status, triggers checkbox marking
 - **Spell Level**: Represents spell levels 1-9, each with systematically mapped checkbox fields for preparation tracking
@@ -135,8 +132,8 @@ A D&D spellcaster wants their prepared spells visually indicated on the characte
 ### Measurable Outcomes
 
 - **SC-001**: All saving throw bonuses are calculated correctly within 1 second of processing character data
-- **SC-002**: All skill bonuses are calculated correctly for characters with any combination of proficiencies and expertise
-- **SC-003**: 100% of proficiency and expertise indicators are marked accurately on the PDF
+- **SC-002**: All skill bonuses are calculated correctly for characters with proficiency selections
+- **SC-003**: 100% of proficiency indicators are marked accurately on the PDF
 - **SC-004**: System handles edge cases (negative modifiers, missing data) without errors or incorrect calculations
 - **SC-005**: Generated PDF maintains all original formatting and layout of the character sheet template
 - **SC-006**: 100% of spell preparation checkboxes are marked accurately for prepared spells across all supported levels (1-9)
@@ -146,11 +143,11 @@ A D&D spellcaster wants their prepared spells visually indicated on the characte
 
 - Character data includes all six ability scores (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma)
 - Character level is provided for proficiency bonus calculation (levels 1-20 supported)
-- Proficiency and expertise selections are clearly indicated in character data
+- Proficiency selections are clearly indicated in character data
 - Standard D&D 5e skill-to-ability mappings are used (no custom ability assignments supported)
 - PDF template contains identifiable form fields for all saving throws and skills
 - Only single-class characters are supported (multiclassing out of scope)
-- PDF template contains checkbox/circle fields for proficiency and expertise indicators
+- PDF template contains checkbox/circle fields for proficiency indicators
 - Prepared spell data is provided with clear spell level organization (levels 1-9)
 - PDF template contains systematically mapped checkbox fields for spell preparation (verified through testing)
 - Cantrips (0th level spells) do not require preparation checkboxes as per D&D 5e rules

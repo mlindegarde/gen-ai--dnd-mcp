@@ -5,7 +5,7 @@
 
 ## Summary
 
-Extend the existing D&D character sheet PDF filler to populate saving throw and skills sections on page 1, plus spell preparation checkboxes. Calculate bonuses using ability modifiers and proficiency rules, mark visual indicators in PDF form fields using systematically verified checkbox mappings, and handle errors gracefully while maintaining D&D 5e rule accuracy.
+Extend the existing D&D character sheet PDF filler to populate saving throw and skills sections on page 1, plus spell preparation checkboxes. Calculate bonuses using ability modifiers and proficiency rules (excluding expertise), mark visual indicators in PDF form fields using systematically verified checkbox mappings, and handle errors gracefully while maintaining D&D 5e rule accuracy.
 
 ## Technical Context
 
