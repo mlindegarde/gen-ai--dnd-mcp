@@ -22,9 +22,9 @@ cargo test [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECH
 Rust 1.75+: Follow standard conventions
 
 ## Recent Changes
+- 004-i-want-to: Added Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling)
+- 004-i-want-to: Added Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling)
 - 003-add-spellcasting-page: Added Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling)
-- 002-add-spell-slot: Added Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling)
-- 002-my-program-no: Added Rust 1.75+ + lopdf (PDF manipulation), pdf-writer (PDF creation), serde_json (JSON handling), tokio (async runtime)
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

@@ -1,0 +1,170 @@
+{
+  "name": "fill_dnd_character_sheet",
+  "description": "Fills a D&D 5e character sheet PDF with character data including saving throws, skills, and spell preparation checkboxes",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "character_data": {
+        "type": "object",
+        "description": "Complete D&D 5e character information",
+        "properties": {
+          "basic_info": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "level": {"type": "integer", "minimum": 1, "maximum": 20},
+              "class": {"type": "string"},
+              "race": {"type": "string"}
+            },
+            "required": ["name", "level"]
+          },
+          "ability_scores": {
+            "type": "object",
+            "properties": {
+              "strength": {"type": "integer", "minimum": 1, "maximum": 30},
+              "dexterity": {"type": "integer", "minimum": 1, "maximum": 30},
+              "constitution": {"type": "integer", "minimum": 1, "maximum": 30},
+              "intelligence": {"type": "integer", "minimum": 1, "maximum": 30},
+              "wisdom": {"type": "integer", "minimum": 1, "maximum": 30},
+              "charisma": {"type": "integer", "minimum": 1, "maximum": 30}
+            },
+            "required": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
+          },
+          "proficiencies": {
+            "type": "object",
+            "properties": {
+              "saving_throws": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
+                }
+              },
+              "skills": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "acrobatics", "animal_handling", "arcana", "athletics", "deception",
+                    "history", "insight", "intimidation", "investigation", "medicine",
+                    "nature", "perception", "performance", "persuasion", "religion",
+                    "sleight_of_hand", "stealth", "survival"
+                  ]
+                }
+              },
+              "expertise": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "acrobatics", "animal_handling", "arcana", "athletics", "deception",
+                    "history", "insight", "intimidation", "investigation", "medicine",
+                    "nature", "perception", "performance", "persuasion", "religion",
+                    "sleight_of_hand", "stealth", "survival"
+                  ]
+                }
+              }
+            }
+          },
+          "spells": {
+            "type": "object",
+            "properties": {
+              "prepared_spells": {
+                "type": "object",
+                "patternProperties": {
+                  "^[1-9]$": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "required": ["ability_scores"]
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Path for filled PDF (default: 'filled_character_sheet.pdf')",
+        "default": "filled_character_sheet.pdf"
+      },
+      "allow_rule_violations": {
+        "type": "boolean",
+        "description": "Allow character data that violates D&D 5e rules (default: false)",
+        "default": false
+      },
+      "return_pdf_content": {
+        "type": "boolean",
+        "description": "Return the PDF file content as base64 for the LLM to save (default: false)",
+        "default": false
+      }
+    },
+    "required": ["character_data"]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {"type": "boolean"},
+      "output_file": {"type": "string"},
+      "calculated_fields": {
+        "type": "object",
+        "properties": {
+          "saving_throws": {
+            "type": "object",
+            "patternProperties": {
+              "^(strength|dexterity|constitution|intelligence|wisdom|charisma)$": {
+                "type": "object",
+                "properties": {
+                  "modifier": {"type": "integer"},
+                  "proficiency_bonus": {"type": "integer"},
+                  "total_bonus": {"type": "integer"},
+                  "is_proficient": {"type": "boolean"}
+                }
+              }
+            }
+          },
+          "skills": {
+            "type": "object",
+            "patternProperties": {
+              "^(acrobatics|animal_handling|arcana|athletics|deception|history|insight|intimidation|investigation|medicine|nature|perception|performance|persuasion|religion|sleight_of_hand|stealth|survival)$": {
+                "type": "object",
+                "properties": {
+                  "ability": {"type": "string"},
+                  "modifier": {"type": "integer"},
+                  "proficiency_bonus": {"type": "integer"},
+                  "total_bonus": {"type": "integer"},
+                  "is_proficient": {"type": "boolean"},
+                  "has_expertise": {"type": "boolean"}
+                }
+              }
+            }
+          },
+          "spell_preparation": {
+            "type": "object",
+            "properties": {
+              "checkboxes_marked": {
+                "type": "object",
+                "patternProperties": {
+                  "^[1-9]$": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "validation_errors": {
+        "type": "array",
+        "items": {"type": "string"}
+      },
+      "pdf_content": {
+        "type": "string",
+        "description": "Base64 encoded PDF content (only if return_pdf_content is true)"
+      }
+    },
+    "required": ["success", "output_file"]
+  }
+}

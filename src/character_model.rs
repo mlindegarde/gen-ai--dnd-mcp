@@ -35,6 +35,77 @@ impl AbilityScores {
         };
         ((score as i8) - 10) / 2
     }
+
+    pub fn get_ability_score(&self, ability: &str) -> u8 {
+        match ability {
+            "strength" => self.strength,
+            "dexterity" => self.dexterity,
+            "constitution" => self.constitution,
+            "intelligence" => self.intelligence,
+            "wisdom" => self.wisdom,
+            "charisma" => self.charisma,
+            _ => 10, // Default to 10 if invalid ability
+        }
+    }
+}
+
+// D&D 5e calculation functions
+pub fn get_proficiency_bonus(level: u8) -> u8 {
+    match level {
+        1..=4 => 2,
+        5..=8 => 3,
+        9..=12 => 4,
+        13..=16 => 5,
+        17..=20 => 6,
+        _ => 2, // Default to +2 for invalid levels
+    }
+}
+
+pub fn calculate_saving_throw_bonus(ability_score: u8, level: u8, is_proficient: bool) -> i8 {
+    let modifier = ((ability_score as i8) - 10) / 2;
+    let proficiency_bonus = if is_proficient { get_proficiency_bonus(level) as i8 } else { 0 };
+    modifier + proficiency_bonus
+}
+
+pub fn calculate_skill_bonus(ability_score: u8, level: u8, is_proficient: bool) -> i8 {
+    let modifier = ((ability_score as i8) - 10) / 2;
+    let proficiency_bonus = if is_proficient { get_proficiency_bonus(level) as i8 } else { 0 };
+    modifier + proficiency_bonus
+}
+
+// Standard D&D 5e skill-to-ability mappings
+pub fn get_skill_ability(skill: &str) -> &'static str {
+    match skill {
+        // Strength-based
+        "athletics" => "strength",
+        
+        // Dexterity-based
+        "acrobatics" => "dexterity",
+        "sleight_of_hand" => "dexterity",
+        "stealth" => "dexterity",
+        
+        // Intelligence-based
+        "arcana" => "intelligence",
+        "history" => "intelligence",
+        "investigation" => "intelligence",
+        "nature" => "intelligence",
+        "religion" => "intelligence",
+        
+        // Wisdom-based
+        "animal_handling" => "wisdom",
+        "insight" => "wisdom",
+        "medicine" => "wisdom",
+        "perception" => "wisdom",
+        "survival" => "wisdom",
+        
+        // Charisma-based
+        "deception" => "charisma",
+        "intimidation" => "charisma",
+        "performance" => "charisma",
+        "persuasion" => "charisma",
+        
+        _ => "intelligence", // Default fallback
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

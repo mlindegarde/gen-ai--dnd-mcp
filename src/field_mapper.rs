@@ -97,6 +97,42 @@ impl FieldMapper {
         field_map.insert("spell_slots_8".to_string(), "SlotsTotal 26".to_string());
         field_map.insert("spell_slots_9".to_string(), "SlotsTotal 27".to_string());
 
+        // Saving Throws (bonus values)
+        field_map.insert("strength_save".to_string(), "ST Strength".to_string());
+        field_map.insert("dexterity_save".to_string(), "ST Dexterity".to_string());
+        field_map.insert("constitution_save".to_string(), "ST Constitution".to_string());
+        field_map.insert("intelligence_save".to_string(), "ST Intelligence".to_string());
+        field_map.insert("wisdom_save".to_string(), "ST Wisdom".to_string());
+        field_map.insert("charisma_save".to_string(), "ST Charisma".to_string());
+
+        // Saving Throw Proficiency Checkboxes (confirmed from systematic testing)
+        field_map.insert("strength_save_prof".to_string(), "Check Box 11".to_string());
+        field_map.insert("dexterity_save_prof".to_string(), "Check Box 18".to_string());
+        field_map.insert("constitution_save_prof".to_string(), "Check Box 19".to_string());
+        field_map.insert("intelligence_save_prof".to_string(), "Check Box 20".to_string());
+        field_map.insert("wisdom_save_prof".to_string(), "Check Box 21".to_string());
+        field_map.insert("charisma_save_prof".to_string(), "Check Box 22".to_string());
+
+        // Skill Proficiency Checkboxes (systematically verified through testing)
+        field_map.insert("acrobatics_prof".to_string(), "Check Box 23".to_string());
+        field_map.insert("animal_handling_prof".to_string(), "Check Box 24".to_string());
+        field_map.insert("arcana_prof".to_string(), "Check Box 25".to_string());
+        field_map.insert("athletics_prof".to_string(), "Check Box 26".to_string());
+        field_map.insert("deception_prof".to_string(), "Check Box 27".to_string());
+        field_map.insert("history_prof".to_string(), "Check Box 28".to_string());
+        field_map.insert("insight_prof".to_string(), "Check Box 29".to_string());
+        field_map.insert("intimidation_prof".to_string(), "Check Box 30".to_string());
+        field_map.insert("investigation_prof".to_string(), "Check Box 31".to_string());
+        field_map.insert("medicine_prof".to_string(), "Check Box 32".to_string());
+        field_map.insert("nature_prof".to_string(), "Check Box 33".to_string());
+        field_map.insert("perception_prof".to_string(), "Check Box 34".to_string());
+        field_map.insert("performance_prof".to_string(), "Check Box 35".to_string());
+        field_map.insert("persuasion_prof".to_string(), "Check Box 36".to_string());
+        field_map.insert("religion_prof".to_string(), "Check Box 37".to_string());
+        field_map.insert("sleight_of_hand_prof".to_string(), "Check Box 38".to_string());
+        field_map.insert("stealth_prof".to_string(), "Check Box 39".to_string());
+        field_map.insert("survival_prof".to_string(), "Check Box 40".to_string());
+
         Self { field_map }
     }
 
@@ -202,12 +238,94 @@ impl FieldMapper {
 
     pub fn get_spell_prepared_checkbox(&self, level: u8, index: usize) -> String {
         match level {
-            0 => format!("Check Box {}", 314 + index), // 314-321 (8 cantrips)
-            1 => format!("Check Box {}", 322 + index), // 322-333 (12 slots)
-            2 => format!("Check Box {}", 334 + index), // 334-346 (13 slots)
-            3 => format!("Check Box {}", 347 + index), // 347-359 (13 slots)
-            4 => format!("Check Box {}", 360 + index), // 360-372 (13 slots)
-            5 => format!("Check Box {}", 373 + index), // 373-385 (13 slots)
+            0 => {
+                // Cantrips don't need preparation checkboxes
+                format!("No checkbox needed for cantrips")
+            },
+            1 => {
+                // Level 1: Check Box 251, 309, 3010-3019 (12 total)
+                let checkboxes = [251, 309, 3010, 3011, 3012, 3013, 3014, 3015, 3016, 3017, 3018, 3019];
+                if index < checkboxes.len() {
+                    format!("Check Box {}", checkboxes[index])
+                } else {
+                    format!("Check Box {}", 3010 + index - 2) // fallback
+                }
+            },
+            2 => {
+                // Level 2: Check Box 313, 310, 3020-3030 (13 total)
+                let checkboxes = [313, 310, 3020, 3021, 3022, 3023, 3024, 3025, 3026, 3027, 3028, 3029, 3030];
+                if index < checkboxes.len() {
+                    format!("Check Box {}", checkboxes[index])
+                } else {
+                    format!("Check Box {}", 3020 + index - 2) // fallback
+                }
+            },
+            3 => {
+                // Level 3: Check Box 315, 314, 3031-3041 (13 total)
+                let checkboxes = [315, 314, 3031, 3032, 3033, 3034, 3035, 3036, 3037, 3038, 3039, 3040, 3041];
+                if index < checkboxes.len() {
+                    format!("Check Box {}", checkboxes[index])
+                } else {
+                    format!("Check Box {}", 3031 + index - 2) // fallback
+                }
+            },
+            4 => {
+                // Level 4: Check Box 317, 316, 3042-3052 (13 total)
+                let checkboxes = [317, 316, 3042, 3043, 3044, 3045, 3046, 3047, 3048, 3049, 3050, 3051, 3052];
+                if index < checkboxes.len() {
+                    format!("Check Box {}", checkboxes[index])
+                } else {
+                    format!("Check Box {}", 3042 + index - 2) // fallback
+                }
+            },
+            5 => {
+                // Level 5: Check Box 319, 318, 3053-3059 (9 total)
+                let checkboxes = [319, 318, 3053, 3054, 3055, 3056, 3057, 3058, 3059];
+                if index < checkboxes.len() {
+                    format!("Check Box {}", checkboxes[index])
+                } else {
+                    format!("Check Box {}", 3053 + index - 2) // fallback
+                }
+            },
+            6 => {
+                // Level 6: Check Box 321, 320, 3060-3066 (9 total)
+                let checkboxes = [321, 320, 3060, 3061, 3062, 3063, 3064, 3065, 3066];
+                if index < checkboxes.len() {
+                    format!("Check Box {}", checkboxes[index])
+                } else {
+                    format!("Check Box {}", 3060 + index - 2) // fallback
+                }
+            },
+            7 => {
+                // Level 7: Check Box 323, 322, 3067-3073 (9 total)
+                let checkboxes = [323, 322, 3067, 3068, 3069, 3070, 3071, 3072, 3073];
+                if index < checkboxes.len() {
+                    format!("Check Box {}", checkboxes[index])
+                } else {
+                    format!("Check Box {}", 3067 + index - 2) // fallback
+                }
+            },
+            8 => {
+                // Level 8: Check Box 325, 324, 3074-3078 (7 total)
+                let checkboxes = [325, 324, 3074, 3075, 3076, 3077, 3078];
+                if index < checkboxes.len() {
+                    format!("Check Box {}", checkboxes[index])
+                } else {
+                    format!("Check Box {}", 3074 + index - 2) // fallback
+                }
+            },
+            9 => {
+                // Level 9: Check Box 327, 326, 3079-3083 (7 total)
+                let checkboxes = [327, 326, 3079, 3080, 3081, 3082, 3083];
+                if index < checkboxes.len() {
+                    format!("Check Box {}", checkboxes[index])
+                } else {
+                    format!("Check Box {}", 3079 + index - 2) // fallback
+                }
+            },
+            _ => format!("Unknown spell level {}", level),
+        }
+    }
             6 => format!("Check Box {}", 386 + index), // 386-398 (13 slots)
             7 => format!("Check Box {}", 399 + index), // 399-411 (13 slots)
             8 => format!("Check Box {}", 412 + index), // 412-424 (13 slots)

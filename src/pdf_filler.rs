@@ -397,6 +397,37 @@ impl PdfFiller {
             }
         }
 
+        // Saving throw bonuses
+        if let Some(proficiencies) = &character_data.proficiencies {
+            let prof_bonus = self.calculate_proficiency_bonus(character.level);
+            
+            // Calculate all six saving throws
+            let saves = [
+                ("strength", abilities.strength),
+                ("dexterity", abilities.dexterity), 
+                ("constitution", abilities.constitution),
+                ("intelligence", abilities.intelligence),
+                ("wisdom", abilities.wisdom),
+                ("charisma", abilities.charisma),
+            ];
+            
+            for (ability_name, ability_score) in saves {
+                let is_proficient = proficiencies.saving_throws.contains(&ability_name.to_string());
+                let ability_mod = self.calculate_modifier(ability_score);
+                let save_bonus = if is_proficient { ability_mod + prof_bonus } else { ability_mod };
+                
+                let save_field_key = format!("{}_save", ability_name);
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name(&save_field_key) {
+                    let bonus_str = if save_bonus >= 0 {
+                        format!("+{}", save_bonus)
+                    } else {
+                        save_bonus.to_string()
+                    };
+                    fields.insert(field_name.clone(), bonus_str);
+                }
+            }
+        }
+
         fields
     }
 
