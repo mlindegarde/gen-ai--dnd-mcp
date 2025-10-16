@@ -11,6 +11,9 @@ Use only essential dependencies: lopdf for PDF manipulation, serde_json for JSON
 ### III. D&D 5e Rule Accuracy
 All calculations MUST follow official D&D 5e rules exactly. Spell save DC = 8 + proficiency + modifier. Proficiency bonus by level table. No house rules or approximations.
 
+### VII. Scope Limitations
+Expertise (double proficiency bonus) is explicitly OUT OF SCOPE for this tool. Only basic proficiency bonuses are supported to maintain simplicity.
+
 ### IV. Rust Idiomatic Code
 Follow standard Rust conventions: snake_case, proper error handling with Result types, no unwrap() in production code, comprehensive unit tests.
 
@@ -54,4 +57,4 @@ Each module has one clear purpose. PDF filling, field mapping, rule validation a
 
 This constitution supersedes all other practices. Changes require explicit documentation and migration plan. All implementations must verify compliance with these principles.
 
-**Version**: 1.1.0 | **Ratified**: 2025-10-15 | **Last Amended**: 2025-10-15
+**Version**: 1.2.0 | **Ratified**: 2025-10-15 | **Last Amended**: 2025-10-16
