@@ -12,6 +12,9 @@ When using this tool, if not otherwise specified, use the following default valu
 - `return_pdf_content` - This should always be true
 - `allow_rule_violations` - This should always be falst
 
+#### Determining Spells to Prepare
+If the character is a spellcasting class, when determining which spells to prepare, use the available context to pick the best spells up to the maximum number of spells that can be prepared for the given character.  Always show the user the list of spells you have selected to prepare.
+
 When using the `fill_dnd_character_sheet` tool, format character data exactly as follows:
 
 ```json
@@ -77,6 +80,7 @@ When using the `fill_dnd_character_sheet` tool, format character data exactly as
 Key requirements:
 - XP should be ignored, we do not use that in our campaign
 - All spell levels (cantrips through ninth_level) must be present, even if empty arrays
+- The number of prepared spells should be correctly limited based on the character stats
 - Skills and saving throws use lowercase ability names
 - Currency uses abbreviated keys: cp, sp, ep, gp, pp
 - Spells need name, level, and prepared fields

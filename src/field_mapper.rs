@@ -47,19 +47,19 @@ impl FieldMapper {
         field_map.insert("animal_handling".to_string(), "Animal".to_string());
         field_map.insert("arcana".to_string(), "Arcana".to_string());
         field_map.insert("athletics".to_string(), "Athletics".to_string());
-        field_map.insert("deception".to_string(), "Deception".to_string());
-        field_map.insert("history".to_string(), "History".to_string());
+        field_map.insert("deception".to_string(), "Deception ".to_string());
+        field_map.insert("history".to_string(), "History ".to_string());
         field_map.insert("insight".to_string(), "Insight".to_string());
         field_map.insert("intimidation".to_string(), "Intimidation".to_string());
-        field_map.insert("investigation".to_string(), "Investigation".to_string());
+        field_map.insert("investigation".to_string(), "Investigation ".to_string());
         field_map.insert("medicine".to_string(), "Medicine".to_string());
         field_map.insert("nature".to_string(), "Nature".to_string());
-        field_map.insert("perception".to_string(), "Perception".to_string());
+        field_map.insert("perception".to_string(), "Perception ".to_string());
         field_map.insert("performance".to_string(), "Performance".to_string());
         field_map.insert("persuasion".to_string(), "Persuasion".to_string());
         field_map.insert("religion".to_string(), "Religion".to_string());
         field_map.insert("sleight_of_hand".to_string(), "SleightofHand".to_string());
-        field_map.insert("stealth".to_string(), "Stealth".to_string());
+        field_map.insert("stealth".to_string(), "Stealth ".to_string());
         field_map.insert("survival".to_string(), "Survival".to_string());
 
         // Narrative fields
