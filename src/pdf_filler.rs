@@ -372,6 +372,79 @@ impl PdfFiller {
             fields.insert(field_name.clone(), format!("+{}", prof_bonus));
         }
 
+        // Passive Perception calculation
+        if let Some(proficiencies) = &character_data.proficiencies {
+            // Validate Wisdom score is within D&D 5e range (1-30)
+            if abilities.wisdom >= 1 && abilities.wisdom <= 30 {
+                let is_perception_proficient = proficiencies.skills.contains(&"perception".to_string());
+                let passive_perception = 10 + self.calculate_modifier(abilities.wisdom) + 
+                    if is_perception_proficient { prof_bonus } else { 0 };
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("passive_perception") {
+                    fields.insert(field_name.clone(), passive_perception.to_string());
+                }
+            }
+            // If Wisdom is invalid, passive perception field remains empty (graceful handling)
+        }
+
+        // Hit Dice calculation
+        let hit_die_type = match character.class.as_str() {
+            "Barbarian" => "d12",
+            "Fighter" | "Paladin" | "Ranger" => "d10",
+            "Bard" | "Cleric" | "Druid" | "Monk" | "Rogue" | "Warlock" => "d8",
+            "Sorcerer" | "Wizard" => "d6",
+            _ => "d8", // Default fallback
+        };
+        if let Some(field_name) = self.field_mapper.get_pdf_field_name("hit_dice_total") {
+            fields.insert(field_name.clone(), character.level.to_string());
+        }
+        if let Some(field_name) = self.field_mapper.get_pdf_field_name("hit_dice_type") {
+            fields.insert(field_name.clone(), hit_die_type.to_string());
+        }
+
+        // Currency fields
+        if let Some(equipment) = &character_data.equipment {
+            if let Some(currency) = &equipment.currency {
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("copper_pieces") {
+                    fields.insert(field_name.clone(), currency.cp.to_string());
+                }
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("silver_pieces") {
+                    fields.insert(field_name.clone(), currency.sp.to_string());
+                }
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("electrum_pieces") {
+                    fields.insert(field_name.clone(), currency.ep.to_string());
+                }
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("gold_pieces") {
+                    fields.insert(field_name.clone(), currency.gp.to_string());
+                }
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("platinum_pieces") {
+                    fields.insert(field_name.clone(), currency.pp.to_string());
+                }
+            }
+        }
+
+        // Features & Traits field
+        if let Some(features_traits) = &character_data.features_traits {
+            let mut combined_text = Vec::new();
+            if let Some(features) = &features_traits.features {
+                combined_text.extend(features.iter().cloned());
+            }
+            if let Some(traits) = &features_traits.traits {
+                combined_text.extend(traits.iter().cloned());
+            }
+            if !combined_text.is_empty() {
+                let features_text = combined_text.join(", ");
+                // Truncate if exceeds PDF field capacity (500 chars)
+                let truncated = if features_text.len() > 500 {
+                    format!("{}...", &features_text[..497])
+                } else {
+                    features_text
+                };
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name("features_traits") {
+                    fields.insert(field_name.clone(), truncated);
+                }
+            }
+        }
+
         // Spells using field mapper
         if let Some(spells) = &character_data.spells {
             // Spell attack bonus and save DC

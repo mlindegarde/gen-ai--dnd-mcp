@@ -202,6 +202,7 @@ fn test_main_pdf_filler() -> Result<(), Box<dyn std::error::Error>> {
         spells: None,
         equipment: None,
         narrative: None,
+        features_traits: None,
     };
     
     println!("Created character: {}", character_data.character.name);

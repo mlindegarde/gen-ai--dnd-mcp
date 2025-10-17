@@ -16,8 +16,8 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Verify embedded PDF template is working in src/mcp_server.rs
-- [ ] T002 [P] Create test character data with all 5 bug fix fields in tests/fixtures/
+- [x] T001 Verify embedded PDF template is working in src/mcp_server.rs
+- [x] T002 [P] Create test character data with all 5 bug fix fields in tests/fixtures/
 
 ---
 
@@ -27,9 +27,9 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Add FeaturesTraits struct to src/character_model.rs
-- [ ] T004 Update CharacterData struct with features_traits field in src/character_model.rs
-- [ ] T005 [P] Update personality_traits field mapping from "Personality" to "PersonalityTraits" in src/field_mapper.rs
+- [x] T003 Add FeaturesTraits struct to src/character_model.rs
+- [x] T004 Update CharacterData struct with features_traits field in src/character_model.rs
+- [x] T005 [P] Update personality_traits field mapping from "Personality" to "PersonalityTraits" in src/field_mapper.rs
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -43,8 +43,8 @@
 
 ### Implementation for User Story 1
 
-- [ ] T006 [US1] Verify PersonalityTraits field mapping exists in src/field_mapper.rs
-- [ ] T007 [US1] Confirm personality traits population works in existing get_field_values() method in src/pdf_filler.rs
+- [x] T006 [US1] Verify PersonalityTraits field mapping exists in src/field_mapper.rs
+- [x] T007 [US1] Confirm personality traits population works in existing get_field_values() method in src/pdf_filler.rs
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -58,9 +58,9 @@
 
 ### Implementation for User Story 2
 
-- [ ] T008 [P] [US2] Add passive_perception field mapping to src/field_mapper.rs
-- [ ] T009 [US2] Add passive perception calculation logic to get_field_values() method in src/pdf_filler.rs
-- [ ] T009a [US2] Add Wisdom score validation (1-30 range) before passive perception calculation in src/pdf_filler.rs
+- [x] T008 [P] [US2] Add passive_perception field mapping to src/field_mapper.rs
+- [x] T009 [US2] Add passive perception calculation logic to get_field_values() method in src/pdf_filler.rs
+- [x] T009a [US2] Add Wisdom score validation (1-30 range) before passive perception calculation in src/pdf_filler.rs
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -74,8 +74,8 @@
 
 ### Implementation for User Story 3
 
-- [ ] T010 [P] [US3] Add hit_dice_total and hit_dice_type field mappings to src/field_mapper.rs
-- [ ] T011 [US3] Add hit dice calculation logic with class-to-die-type mapping to get_field_values() method in src/pdf_filler.rs
+- [x] T010 [P] [US3] Add hit_dice_total and hit_dice_type field mappings to src/field_mapper.rs
+- [x] T011 [US3] Add hit dice calculation logic with class-to-die-type mapping to get_field_values() method in src/pdf_filler.rs
 
 **Checkpoint**: User Stories 1, 2, AND 3 should all work independently
 
@@ -89,7 +89,7 @@
 
 ### Implementation for User Story 4
 
-- [ ] T012 [US4] Add currency field population logic to get_field_values() method in src/pdf_filler.rs (currency fields already mapped)
+- [x] T012 [US4] Add currency field population logic to get_field_values() method in src/pdf_filler.rs (currency fields already mapped)
 
 **Checkpoint**: User Stories 1-4 should all work independently
 
@@ -103,8 +103,8 @@
 
 ### Implementation for User Story 5
 
-- [ ] T013 [P] [US5] Add features_traits field mapping to src/field_mapper.rs
-- [ ] T014 [US5] Add features & traits combination logic to get_field_values() method in src/pdf_filler.rs
+- [x] T013 [P] [US5] Add features_traits field mapping to src/field_mapper.rs
+- [x] T014 [US5] Add features & traits combination logic to get_field_values() method in src/pdf_filler.rs
 
 **Checkpoint**: All 5 user stories should now be independently functional
 
@@ -114,9 +114,9 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T015 [P] Build and test complete implementation with cargo build --release
-- [ ] T016 [P] Test MCP server with all 5 bug fixes using fill_dnd_character_sheet tool
-- [ ] T017 Validate all PDF fields populate correctly with comprehensive test character data
+- [x] T015 [P] Build and test complete implementation with cargo build --release
+- [x] T016 [P] Test MCP server with all 5 bug fixes using fill_dnd_character_sheet tool
+- [x] T017 Validate all PDF fields populate correctly with comprehensive test character data
 
 ---
 

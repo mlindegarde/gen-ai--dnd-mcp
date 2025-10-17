@@ -62,8 +62,18 @@ impl FieldMapper {
         field_map.insert("stealth".to_string(), "Stealth ".to_string());
         field_map.insert("survival".to_string(), "Survival".to_string());
 
+        // Passive Perception
+        field_map.insert("passive_perception".to_string(), "Passive".to_string());
+
+        // Hit Dice
+        field_map.insert("hit_dice_total".to_string(), "HDTotal".to_string());
+        field_map.insert("hit_dice_type".to_string(), "HD".to_string());
+
+        // Features & Traits
+        field_map.insert("features_traits".to_string(), "Features and Traits".to_string());
+
         // Narrative fields
-        field_map.insert("personality_traits".to_string(), "Personality".to_string());
+        field_map.insert("personality_traits".to_string(), "PersonalityTraits ".to_string());
         field_map.insert("ideals".to_string(), "Ideals".to_string());
         field_map.insert("bonds".to_string(), "Bonds".to_string());
         field_map.insert("flaws".to_string(), "Flaws".to_string());

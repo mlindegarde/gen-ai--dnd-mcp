@@ -1,0 +1,72 @@
+{
+  "character": {
+    "name": "Elara Moonwhisper",
+    "class": "Wizard",
+    "level": 3,
+    "background": "Sage",
+    "player_name": "Test Player",
+    "race": "High Elf",
+    "alignment": "Neutral Good",
+    "experience_points": 900
+  },
+  "abilities": {
+    "strength": 8,
+    "dexterity": 14,
+    "constitution": 13,
+    "intelligence": 16,
+    "wisdom": 15,
+    "charisma": 12
+  },
+  "proficiencies": {
+    "saving_throws": ["intelligence", "wisdom"],
+    "skills": ["arcana", "history", "investigation", "perception"]
+  },
+  "narrative": {
+    "personality_traits": "I am incredibly slow to trust. Those who seem the fairest often have the most to hide.",
+    "ideals": "Knowledge. The path to power and self-improvement is through knowledge.",
+    "bonds": "The workshop where I learned my trade is the most important place in the world to me.",
+    "flaws": "I speak without really thinking through my words, invariably insulting others."
+  },
+  "features_traits": {
+    "features": [
+      "Arcane Recovery",
+      "Ritual Casting",
+      "Spellcasting"
+    ],
+    "traits": [
+      "Darkvision",
+      "Keen Senses", 
+      "Fey Ancestry",
+      "Trance",
+      "Elf Weapon Training",
+      "Cantrip (Prestidigitation)"
+    ]
+  },
+  "equipment": {
+    "currency": {
+      "cp": 50,
+      "sp": 25,
+      "ep": 10,
+      "gp": 100,
+      "pp": 5
+    },
+    "items": "Spellbook, quarterstaff, dagger, scholar's pack, spellcasting focus"
+  },
+  "spells": {
+    "spellcasting_class": "Wizard",
+    "spellcasting_ability": "Intelligence",
+    "cantrips": [
+      {"name": "Mage Hand", "level": 0, "prepared": true},
+      {"name": "Prestidigitation", "level": 0, "prepared": true},
+      {"name": "Minor Illusion", "level": 0, "prepared": true}
+    ],
+    "first_level": [
+      {"name": "Magic Missile", "level": 1, "prepared": true},
+      {"name": "Shield", "level": 1, "prepared": true},
+      {"name": "Detect Magic", "level": 1, "prepared": true}
+    ],
+    "second_level": [
+      {"name": "Misty Step", "level": 2, "prepared": true}
+    ]
+  }
+}

@@ -179,6 +179,12 @@ pub struct CharacterNarrative {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FeaturesTraits {
+    pub features: Option<Vec<String>>,
+    pub traits: Option<Vec<String>>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CharacterData {
     pub character: Character,
     pub abilities: AbilityScores,
@@ -187,4 +193,5 @@ pub struct CharacterData {
     pub spells: Option<Spells>,
     pub equipment: Option<Equipment>,
     pub narrative: Option<CharacterNarrative>,
+    pub features_traits: Option<FeaturesTraits>,
 }

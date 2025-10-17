@@ -110,6 +110,14 @@ When using the `fill_dnd_character_sheet` tool, format character data exactly as
     "bonds": "Bond description",
     "flaws": "Flaw description"
   },
+  "features_traits": {
+    "features": [
+      "Feature description"
+    ],
+    "traits": [
+      "Trait description"
+    ]
+  },
   "equipment": {
     "currency": {"cp": 0, "sp": 0, "ep": 0, "gp": 0, "pp": 0},
     "items": "Comma-separated list of equipment"
