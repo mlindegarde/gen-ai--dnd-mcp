@@ -13,8 +13,9 @@ Essential tool descriptions for D&D Assistant MCP Server.
 - Campaign - An overaching story that is made up of mulitple `sessions`:  Typically features a final objective *(e.g. fighting a boss NPC charcter or locating something or someone)*
 - Session - A portion of the `campaign` completed in a single sitting.  A `session` can be anywhere from an hour *(or less)* to several hours long.  The notes captured during a session help build the shared fiction that fleshes out the overall `campaign` story.
 
-## Kye Fields
-- `character-level-[<level>].md` - This file contains all of the player's character details at their current `level`.  For example, a level six character file would be named `character-level-6.md`.  If this file is missing, you **MUST** work with the user to populate this file before going any further.
+## Key Files
+- `character-background.md` - This file contains the character's background, physical description, backstory, and hooks for the DM / Party.  If this file is missing, you **MUST** work iwth the user to generate this file before going any further. 
+- `character-level-[<level>].md` - This file contains all of the player's character details at their current `level`.  For example, a level six character file would be named `character-level-6.md`.  If there are no character files for any level, you **MUST** work with the user to populate this file before going any further.
 - `party.md` - This file contains all of the members of the party:  Both the player's real name and their chracter's name.  It is primarily used for mapping between the real player's name and their character's name.  If this file is missing, you **MUST** prompt the user to create it.  Ask for the party members, then follow-up asking if they would like to provide additional details like the class, race, or any other information that might be helpful in the future.  When capturing session notes, you **MUST** prompt the user and ask if they would like to update this file based on the most recent session.
 - `campaign.md` - This file contains the high level details about the campaign:  Setting, campaign goals, any side quests that are known, and any additional information related o the campaign.  If the campaign is a well known campaign *(e.g. The Dragon of Icespire Peak)*, you **MUST** suggest a summary from known resources.
 - `session-[<session-number>].md` - This series of files contains the notes from past sessions.  When capturing session notes, you **MUST** create a new file following standard numbering starting with `1`.  For example, the first session note would be named `session-1.md` and the second would be `session-2.md`
@@ -22,7 +23,7 @@ Essential tool descriptions for D&D Assistant MCP Server.
 ## Core Instructions
 - If a `character.md` file is present, you **MUST** load that file and great the user by their character's name
 - When items are missing, something is ambiguous, or additional input is neede, you **MUST** get the user's input before proceeding
-- When starting any conversation, check for the existance of `character.md`, `party.md`, `campaign.md`, and any `session-[<session-number>].md` files.  If the `character.md`, `party.md`, or `campaign.md` files are missing you **MUST** get the user's input and populate these files before proceeding.
+- When starting any conversation, check for the existance of `character-overview.md`, `character-level-[<level>].md`, `party.md`, `campaign.md`, and any `session-[<session-number>].md` files.  If the `character-overview.md`, `character-level-[<level>].md`, `party.md`, or `campaign.md` files are missing you **MUST** get the user's input and populate these files before proceeding.  There only needs to be one `character-level-[<level>].md` file, but there may be more *(e.g. `character-level-1.md`).
 - Whenever new input has been gathered, you **MUST** update the `campaign.md`, `party.md`, or `character-level-[<level>].md` file to include the new information.  Unless explicitly told to do so **NEVER** update old session notes.
 
 ## Capturing Session Notes
