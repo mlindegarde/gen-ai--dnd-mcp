@@ -424,23 +424,33 @@ impl PdfFiller {
 
         // Features & Traits field
         if let Some(features_traits) = &character_data.features_traits {
-            let mut combined_text = Vec::new();
+            let mut lines = Vec::new();
+            
             if let Some(features) = &features_traits.features {
-                combined_text.extend(features.iter().cloned());
+                if !features.is_empty() {
+                    lines.push("Features:".to_string());
+                    for feature in features {
+                        lines.push(format!("- {}", feature));
+                    }
+                }
             }
+            
             if let Some(traits) = &features_traits.traits {
-                combined_text.extend(traits.iter().cloned());
+                if !traits.is_empty() {
+                    if !lines.is_empty() {
+                        lines.push("".to_string()); // Empty line separator
+                    }
+                    lines.push("Traits:".to_string());
+                    for trait_item in traits {
+                        lines.push(format!("- {}", trait_item));
+                    }
+                }
             }
-            if !combined_text.is_empty() {
-                let features_text = combined_text.join(", ");
-                // Truncate if exceeds PDF field capacity (500 chars)
-                let truncated = if features_text.len() > 500 {
-                    format!("{}...", &features_text[..497])
-                } else {
-                    features_text
-                };
+            
+            if !lines.is_empty() {
+                let features_text = lines.join("\n");
                 if let Some(field_name) = self.field_mapper.get_pdf_field_name("features_traits") {
-                    fields.insert(field_name.clone(), truncated);
+                    fields.insert(field_name.clone(), features_text);
                 }
             }
         }
