@@ -20,6 +20,51 @@ impl PdfFiller {
         }
     }
 
+    pub fn fill_character_sheet_from_bytes(
+        &self,
+        character_data: &CharacterData,
+        template_bytes: &[u8],
+        output_path: &str,
+    ) -> Result<FillResult, PdfError> {
+        // Validate character data
+        let validation_result = self.validator.validate(character_data);
+        let validation_errors = match validation_result {
+            Ok(warnings) => warnings,
+            Err(errors) => {
+                return Err(PdfError::WriteError(format!(
+                    "Validation failed: {:?}",
+                    errors
+                )))
+            }
+        };
+
+        // Load the PDF template from bytes
+        let mut doc = Document::load_mem(template_bytes)
+            .map_err(|e| PdfError::WriteError(format!("Failed to load PDF from bytes: {}", e)))?;
+
+        // Fill the PDF form fields
+        self.fill_pdf_fields(&mut doc, character_data)?;
+
+        // Save the filled PDF with explicit sync
+        doc.save(output_path)
+            .map_err(|e| PdfError::WriteError(format!("Failed to save PDF: {}", e)))?;
+
+        // Force filesystem sync to ensure file is written
+        use std::fs::File;
+        use std::io::Write;
+        if let Ok(mut file) = File::options().write(true).open(output_path) {
+            let _ = file.flush();
+            let _ = file.sync_all();
+        }
+
+        Ok(FillResult {
+            success: true,
+            output_file: output_path.to_string(),
+            validation_errors,
+            calculated_fields: self.calculate_derived_values(character_data),
+        })
+    }
+
     pub fn fill_character_sheet(
         &self,
         character_data: &CharacterData,

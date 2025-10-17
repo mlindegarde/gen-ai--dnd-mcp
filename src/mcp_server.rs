@@ -5,6 +5,9 @@ use serde_json::{json, Value};
 use std::fs::{self, OpenOptions};
 use std::io::{self, BufRead, BufReader, Write};
 
+// Embed the PDF template at compile time
+const PDF_TEMPLATE: &[u8] = include_bytes!("../docs/5E_CharacterSheet_Fillable.pdf");
+
 fn log_to_file(message: &str) {
     if let Ok(mut file) = OpenOptions::new()
         .create(true)
@@ -247,10 +250,10 @@ impl McpServer {
         // Create PDF filler with appropriate settings
         let filler = PdfFiller::new(allow_violations);
 
-        // Fill the character sheet
-        match filler.fill_character_sheet(
+        // Fill the character sheet using embedded template
+        match filler.fill_character_sheet_from_bytes(
             &character_data,
-            "docs/5E_CharacterSheet_Fillable.pdf",
+            PDF_TEMPLATE,
             output_path,
         ) {
             Ok(result) => {
