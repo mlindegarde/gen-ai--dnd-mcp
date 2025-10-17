@@ -8,6 +8,7 @@ Auto-generated from all feature plans. Last updated: 2025-10-14
 - Local filesystem for PDF output files (002-my-program-no)
 - Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling) (002-add-spell-slot)
 - N/A (calculated values only, no persistence) (002-add-spell-slot)
+- Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling), pdf-writer (PDF creation) (005-fix-bugs-i)
 
 ## Project Structure
 ```
@@ -22,9 +23,9 @@ cargo test [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECH
 Rust 1.75+: Follow standard conventions
 
 ## Recent Changes
+- 005-fix-bugs-i: Added Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling), pdf-writer (PDF creation)
+- 005-fix-bugs-i: Added Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling), pdf-writer (PDF creation)
 - 004-i-want-to: Added Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling)
-- 004-i-want-to: Added Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling)
-- 003-add-spellcasting-page: Added Rust 1.75+ + lopdf (PDF manipulation), serde_json (JSON handling)
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

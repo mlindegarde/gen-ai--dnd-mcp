@@ -1,3 +1,13 @@
+<!--
+Sync Impact Report:
+- Version change: 1.2.0 → 1.3.0
+- Modified principles: VII. Scope Limitations (expanded to include multi-classing)
+- Added sections: None
+- Removed sections: None
+- Templates requiring updates: ✅ All templates reviewed - no updates needed
+- Follow-up TODOs: None
+-->
+
 # D&D Character Sheet Filler Constitution
 
 ## Core Principles
@@ -11,9 +21,6 @@ Use only essential dependencies: lopdf for PDF manipulation, serde_json for JSON
 ### III. D&D 5e Rule Accuracy
 All calculations MUST follow official D&D 5e rules exactly. Spell save DC = 8 + proficiency + modifier. Proficiency bonus by level table. No house rules or approximations.
 
-### VII. Scope Limitations
-Expertise (double proficiency bonus) is explicitly OUT OF SCOPE for this tool. Only basic proficiency bonuses are supported to maintain simplicity.
-
 ### IV. Rust Idiomatic Code
 Follow standard Rust conventions: snake_case, proper error handling with Result types, no unwrap() in production code, comprehensive unit tests.
 
@@ -22,6 +29,14 @@ When adding new features, MUST take the simplest approach that works. Prefer inl
 
 ### VI. Single Responsibility
 Each module has one clear purpose. PDF filling, field mapping, rule validation are separate concerns. No god objects or mixed responsibilities.
+
+### VII. Scope Limitations
+The following advanced D&D features are explicitly OUT OF SCOPE to maintain tool simplicity:
+- Multi-classing support (characters with multiple classes)
+- Expert skill tracking (double proficiency bonus mechanics)
+- Advanced character options beyond basic single-class progression
+
+Only basic single-class character mechanics are supported. This limitation ensures focused development and prevents feature creep that would complicate the core PDF filling functionality.
 
 ## Quality Standards
 
@@ -57,4 +72,4 @@ Each module has one clear purpose. PDF filling, field mapping, rule validation a
 
 This constitution supersedes all other practices. Changes require explicit documentation and migration plan. All implementations must verify compliance with these principles.
 
-**Version**: 1.2.0 | **Ratified**: 2025-10-15 | **Last Amended**: 2025-10-16
+**Version**: 1.3.0 | **Ratified**: 2025-10-15 | **Last Amended**: 2025-10-17

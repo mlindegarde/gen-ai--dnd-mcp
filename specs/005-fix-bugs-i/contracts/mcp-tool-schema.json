@@ -1,0 +1,119 @@
+{
+  "name": "fill_dnd_character_sheet",
+  "description": "Fills a D&D 5e character sheet PDF with provided character data including spells, proficiencies, and narrative elements. Now supports personality traits, passive perception, hit dice, currency fields, and features & traits.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "character_data": {
+        "type": "object",
+        "description": "Complete D&D 5e character information",
+        "properties": {
+          "character": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "class": {"type": "string", "description": "Used for hit dice calculation"},
+              "level": {"type": "integer", "minimum": 1, "maximum": 20},
+              "race": {"type": "string"}
+            },
+            "required": ["name", "class", "level", "race"]
+          },
+          "abilities": {
+            "type": "object", 
+            "properties": {
+              "wisdom": {"type": "integer", "minimum": 1, "maximum": 30, "description": "Used for passive perception calculation"}
+            },
+            "required": ["wisdom"]
+          },
+          "narrative": {
+            "type": "object",
+            "description": "Character personality and background (optional)",
+            "properties": {
+              "personality_traits": {"type": "string", "description": "Will be populated in PDF personality traits field"}
+            }
+          },
+          "features_traits": {
+            "type": "object",
+            "description": "Character features and racial traits (optional)",
+            "properties": {
+              "features": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Character class features"
+              },
+              "traits": {
+                "type": "array", 
+                "items": {"type": "string"},
+                "description": "Racial traits and abilities"
+              }
+            }
+          },
+          "proficiencies": {
+            "type": "object",
+            "description": "Character proficiencies (optional)",
+            "properties": {
+              "skills": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Include 'perception' for passive perception proficiency bonus"
+              }
+            }
+          },
+          "equipment": {
+            "type": "object",
+            "description": "Character equipment and currency (optional)",
+            "properties": {
+              "currency": {
+                "type": "object",
+                "properties": {
+                  "cp": {"type": "integer", "minimum": 0, "description": "Copper pieces"},
+                  "sp": {"type": "integer", "minimum": 0, "description": "Silver pieces"},
+                  "ep": {"type": "integer", "minimum": 0, "description": "Electrum pieces"},
+                  "gp": {"type": "integer", "minimum": 0, "description": "Gold pieces"},
+                  "pp": {"type": "integer", "minimum": 0, "description": "Platinum pieces"}
+                }
+              }
+            }
+          }
+        },
+        "required": ["character", "abilities"]
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Path where filled PDF should be saved",
+        "default": "filled_character_sheet.pdf"
+      },
+      "allow_rule_violations": {
+        "type": "boolean",
+        "default": false,
+        "description": "Allow character data that violates D&D 5e rules"
+      },
+      "return_pdf_content": {
+        "type": "boolean", 
+        "default": false,
+        "description": "Return the PDF file content as base64 for the LLM to save (WARNING: Large response)"
+      }
+    },
+    "required": ["character_data"]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {"type": "boolean"},
+      "output_file": {"type": "string"},
+      "calculated_fields": {
+        "type": "object",
+        "description": "Calculated values including new bug fixes",
+        "properties": {
+          "passive_perception": {"type": "string", "description": "Calculated passive Wisdom (Perception)"},
+          "hit_dice": {"type": "string", "description": "Formatted hit dice (e.g., '3d8')"}
+        }
+      },
+      "validation_errors": {
+        "type": "array",
+        "items": {"type": "object"}
+      },
+      "message": {"type": "string"}
+    }
+  }
+}
