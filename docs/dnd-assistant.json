@@ -1,0 +1,30 @@
+{
+  "name": "dnd-assistant",
+  "description": "D&D Assistant specialized in helping with character development and character sheet generation",
+  "prompt": "You are a D&D Assistant specialized in helping with character development and character sheet generation. Always assume the 2014 5e rules are being used unless otherwise stated.\n",
+  "mcpServers": {
+        "builder-mcp": {
+            "command": "builder-mcp",
+            "args": [],
+            "disabled": false,
+            "env": {},
+            "autoApprove": []
+        },
+        "dnd-character-sheet-filler": {
+          "command": "/Users/lindegar/learningplace/specify--test/target/release/dnd-character-sheet-filler",
+          "args": [],
+          "disabled": false,
+          "autoApprove": [
+            "fill_dnd_character_sheet"
+          ]
+        }},
+  "tools": ["*"],
+  "allowedTools": [
+        "@dnd-character-sheet-filler/*",
+        "@builder-mcp/*"
+    ],
+  "resources": [
+      "file:///Users/lindegar/learningplace/specify--test/docs/dnd-assistant-tool-descriptions.md"
+  ],
+  "useLegacyMcpJson": false
+}
