@@ -326,11 +326,4 @@ impl FieldMapper {
             _ => format!("Unknown spell level {}", level),
         }
     }
-            6 => format!("Check Box {}", 386 + index), // 386-398 (13 slots)
-            7 => format!("Check Box {}", 399 + index), // 399-411 (13 slots)
-            8 => format!("Check Box {}", 412 + index), // 412-424 (13 slots)
-            9 => format!("Check Box {}", 425 + index), // 425-437 (13 slots)
-            _ => format!("Unknown Checkbox Level {}", level),
-        }
-    }
 }

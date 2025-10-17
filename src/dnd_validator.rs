@@ -164,4 +164,43 @@ impl DndValidator {
             _ => 2,
         }
     }
+
+    /// Validate that ability scores are within valid D&D 5e range (1-30)
+    pub fn validate_ability_score_range(score: u8, ability_name: &str) -> Result<(), ValidationError> {
+        if score < 1 || score > 30 {
+            Err(ValidationError::AbilityScore {
+                ability: ability_name.to_string(),
+                value: score,
+                message: "must be between 1 and 30".to_string(),
+            })
+        } else {
+            Ok(())
+        }
+    }
+
+    /// Validate that all required ability scores are present and valid
+    pub fn validate_all_ability_scores(abilities: &AbilityScores) -> Vec<ValidationError> {
+        let mut errors = Vec::new();
+        
+        if let Err(e) = Self::validate_ability_score_range(abilities.strength, "Strength") {
+            errors.push(e);
+        }
+        if let Err(e) = Self::validate_ability_score_range(abilities.dexterity, "Dexterity") {
+            errors.push(e);
+        }
+        if let Err(e) = Self::validate_ability_score_range(abilities.constitution, "Constitution") {
+            errors.push(e);
+        }
+        if let Err(e) = Self::validate_ability_score_range(abilities.intelligence, "Intelligence") {
+            errors.push(e);
+        }
+        if let Err(e) = Self::validate_ability_score_range(abilities.wisdom, "Wisdom") {
+            errors.push(e);
+        }
+        if let Err(e) = Self::validate_ability_score_range(abilities.charisma, "Charisma") {
+            errors.push(e);
+        }
+        
+        errors
+    }
 }

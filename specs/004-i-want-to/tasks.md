@@ -16,52 +16,52 @@
 
 **Goal**: Initialize project structure and verify existing components
 
-- [ ] T001 Verify existing codebase structure matches plan.md requirements AND confirm calculate_saving_throw_bonus() and calculate_skill_bonus() functions exist in current implementation
-- [ ] T002 Confirm field_mapper.rs contains systematically verified checkbox mappings
+- [x] T001 Verify existing codebase structure matches plan.md requirements AND confirm calculate_saving_throw_bonus() and calculate_skill_bonus() functions exist in current implementation
+- [x] T002 Confirm field_mapper.rs contains systematically verified checkbox mappings
 
 ## Phase 2: Foundational
 
 **Goal**: Extend core modules with shared functionality and error handling needed by all user stories
 
-- [ ] T003 [P] Add checkbox marking capability to pdf_filler.rs
-- [ ] T004 [P] Extend errors.rs with saving throw and skill error types
-- [ ] T004.1 [P] Add ability score validation functions to dnd_validator.rs
-- [ ] T004.2 [P] Add negative modifier handling to calculation functions in pdf_filler.rs
-- [ ] T004.3 [P] Add error indicator display logic for invalid calculations in pdf_filler.rs
+- [x] T003 [P] Add checkbox marking capability to pdf_filler.rs
+- [x] T004 [P] Extend errors.rs with saving throw and skill error types
+- [x] T004.1 [P] Add ability score validation functions to dnd_validator.rs
+- [x] T004.2 [P] Add negative modifier handling to calculation functions in pdf_filler.rs
+- [x] T004.3 [P] Add error indicator display logic for invalid calculations in pdf_filler.rs
 
 ## Phase 3: User Story 1 - Basic Saving Throws Population (P1)
 
 **Goal**: Calculate and populate saving throw bonuses in PDF  
 **Independent Test**: Provide character with ability scores and saving throw proficiencies, verify PDF shows correct calculated bonuses
 
-- [ ] T005 [US1] Implement saving throw bonus population in pdf_filler.rs (verify calculate_saving_throw_bonus() exists first, create if missing)
-- [ ] T006 [US1] Add saving throw field mapping integration using verified checkbox fields (Check Box 11, 18-22)
-- [ ] T007 [US1] Add basic unit test for saving throw bonus calculations
+- [x] T005 [US1] Implement saving throw bonus population in pdf_filler.rs (verify calculate_saving_throw_bonus() exists first, create if missing)
+- [x] T006 [US1] Add saving throw field mapping integration using verified checkbox fields (Check Box 11, 18-22)
+- [x] T007 [US1] Add basic unit test for saving throw bonus calculations
 
 ## Phase 4: User Story 2 - Skills Population with Proficiency (P2)
 
 **Goal**: Calculate and populate skill bonuses in PDF  
 **Independent Test**: Provide character with skill proficiencies, verify PDF shows correct skill bonuses
 
-- [ ] T008 [US2] Implement skill bonus population in pdf_filler.rs (verify calculate_skill_bonus() exists first, create if missing)
-- [ ] T009 [US2] Add skill field mapping integration using verified checkbox fields (Check Box 23-40)
+- [x] T008 [US2] Implement skill bonus population in pdf_filler.rs (verify calculate_skill_bonus() exists first, create if missing)
+- [x] T009 [US2] Add skill field mapping integration using verified checkbox fields (Check Box 23-40)
 
 ## Phase 5: User Story 4 - Spell Preparation Checkbox Marking (P2)
 
 **Goal**: Mark spell preparation checkboxes for prepared spells  
 **Independent Test**: Provide character with prepared spells across levels, verify checkboxes marked in correct spell level sections
 
-- [ ] T010 [US4] Implement spell preparation checkbox marking in pdf_filler.rs using spell.prepared field
-- [ ] T011 [US4] Add spell preparation field mapping using verified checkbox mappings (levels 1-9)
-- [ ] T011.1 [US4] Add spell data validation in pdf_filler.rs before checkbox marking
-- [ ] T011.2 [US4] Add spell overflow handling when more spells than available checkboxes
+- [x] T010 [US4] Implement spell preparation checkbox marking in pdf_filler.rs using spell.prepared field
+- [x] T011 [US4] Add spell preparation field mapping using verified checkbox mappings (levels 1-9)
+- [x] T011.1 [US4] Add spell data validation in pdf_filler.rs before checkbox marking
+- [x] T011.2 [US4] Add spell overflow handling when more spells than available checkboxes
 
 ## Phase 6: User Story 3 - Proficiency Indicator Marking (P3)
 
 **Goal**: Mark proficiency indicators for saving throws and skills  
 **Independent Test**: Provide character with specific proficiencies, verify appropriate visual markers shown
 
-- [ ] T012 [US3] Integrate proficiency checkbox marking with saving throw and skill population logic
+- [x] T012 [US3] Integrate proficiency checkbox marking with saving throw and skill population logic
 
 ## Dependencies
 
@@ -106,9 +106,9 @@ Phase 1 (Setup) → Phase 2 (Foundational) → Phase 3 (US1)
 
 ## Success Criteria
 
-- [ ] All saving throw bonuses calculated and populated correctly
-- [ ] All skill bonuses calculated and populated correctly  
-- [ ] All spell preparation checkboxes marked for prepared spells
-- [ ] All proficiency indicators marked appropriately
-- [ ] PDF maintains original formatting and layout
-- [ ] Error handling allows partial success when some data invalid
+- [x] All saving throw bonuses calculated and populated correctly
+- [x] All skill bonuses calculated and populated correctly  
+- [x] All spell preparation checkboxes marked for prepared spells
+- [x] All proficiency indicators marked appropriately
+- [x] PDF maintains original formatting and layout
+- [x] Error handling allows partial success when some data invalid

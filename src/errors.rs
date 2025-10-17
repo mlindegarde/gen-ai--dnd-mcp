@@ -26,6 +26,15 @@ pub enum ValidationError {
         skill: String,
         message: String,
     },
+    SavingThrow {
+        ability: String,
+        message: String,
+    },
+    SkillCalculation {
+        skill: String,
+        ability: String,
+        message: String,
+    },
 }
 
 impl fmt::Display for ValidationError {
@@ -61,6 +70,12 @@ impl fmt::Display for ValidationError {
             }
             ValidationError::Proficiency { skill, message } => {
                 write!(f, "Skill '{}' {}", skill, message)
+            }
+            ValidationError::SavingThrow { ability, message } => {
+                write!(f, "Saving throw '{}' {}", ability, message)
+            }
+            ValidationError::SkillCalculation { skill, ability, message } => {
+                write!(f, "Skill '{}' ({}) {}", skill, ability, message)
             }
         }
     }

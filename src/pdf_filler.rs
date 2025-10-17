@@ -71,7 +71,9 @@ impl PdfFiller {
         character_data: &CharacterData,
     ) -> Result<(), PdfError> {
         let field_values = self.get_field_values(character_data);
+        let checkbox_fields = self.get_checkbox_fields(character_data);
         
+        // Fill text fields
         for (object_id, object) in doc.objects.clone() {
             if let Object::Dictionary(dict) = object {
                 if let Ok(Object::String(field_name_bytes, _)) = dict.get(b"T") {
@@ -85,6 +87,9 @@ impl PdfFiller {
                 }
             }
         }
+        
+        // Mark checkboxes
+        self.mark_checkboxes(doc, &checkbox_fields)?;
         
         Ok(())
     }
@@ -107,6 +112,30 @@ impl PdfFiller {
                             new_dict.set(b"V", Object::String(value.as_bytes().to_vec(), lopdf::StringFormat::Literal));
                             new_dict.remove(b"AP"); // Remove appearance to force regeneration
                             doc.objects.insert(*field_ref, Object::Dictionary(new_dict));
+                        }
+                    }
+                }
+            }
+        }
+        Ok(())
+    }
+    
+    /// Mark checkbox fields in the PDF by setting their value to "Yes"
+    fn mark_checkboxes(
+        &self,
+        doc: &mut Document,
+        checkbox_fields: &HashMap<String, bool>,
+    ) -> Result<(), PdfError> {
+        for (object_id, object) in doc.objects.clone() {
+            if let Object::Dictionary(dict) = object {
+                if let Ok(Object::String(field_name_bytes, _)) = dict.get(b"T") {
+                    let field_name = String::from_utf8_lossy(&field_name_bytes);
+                    
+                    if let Some(&should_mark) = checkbox_fields.get(field_name.as_ref()) {
+                        if should_mark {
+                            let mut new_dict = dict.clone();
+                            new_dict.set(b"V", Object::String(b"Yes".to_vec(), lopdf::StringFormat::Literal));
+                            doc.objects.insert(object_id, Object::Dictionary(new_dict));
                         }
                     }
                 }
@@ -399,8 +428,6 @@ impl PdfFiller {
 
         // Saving throw bonuses
         if let Some(proficiencies) = &character_data.proficiencies {
-            let prof_bonus = self.calculate_proficiency_bonus(character.level);
-            
             // Calculate all six saving throws
             let saves = [
                 ("strength", abilities.strength),
@@ -413,16 +440,39 @@ impl PdfFiller {
             
             for (ability_name, ability_score) in saves {
                 let is_proficient = proficiencies.saving_throws.contains(&ability_name.to_string());
-                let ability_mod = self.calculate_modifier(ability_score);
-                let save_bonus = if is_proficient { ability_mod + prof_bonus } else { ability_mod };
-                
                 let save_field_key = format!("{}_save", ability_name);
                 if let Some(field_name) = self.field_mapper.get_pdf_field_name(&save_field_key) {
-                    let bonus_str = if save_bonus >= 0 {
-                        format!("+{}", save_bonus)
-                    } else {
-                        save_bonus.to_string()
-                    };
+                    let bonus_str = self.calculate_saving_throw_safe(ability_score, character.level, is_proficient, ability_name);
+                    fields.insert(field_name.clone(), bonus_str);
+                }
+            }
+
+            // Skill bonuses
+            let skills = [
+                ("acrobatics", abilities.dexterity, "Dexterity"),
+                ("animal_handling", abilities.wisdom, "Wisdom"),
+                ("arcana", abilities.intelligence, "Intelligence"),
+                ("athletics", abilities.strength, "Strength"),
+                ("deception", abilities.charisma, "Charisma"),
+                ("history", abilities.intelligence, "Intelligence"),
+                ("insight", abilities.wisdom, "Wisdom"),
+                ("intimidation", abilities.charisma, "Charisma"),
+                ("investigation", abilities.intelligence, "Intelligence"),
+                ("medicine", abilities.wisdom, "Wisdom"),
+                ("nature", abilities.intelligence, "Intelligence"),
+                ("perception", abilities.wisdom, "Wisdom"),
+                ("performance", abilities.charisma, "Charisma"),
+                ("persuasion", abilities.charisma, "Charisma"),
+                ("religion", abilities.intelligence, "Intelligence"),
+                ("sleight_of_hand", abilities.dexterity, "Dexterity"),
+                ("stealth", abilities.dexterity, "Dexterity"),
+                ("survival", abilities.wisdom, "Wisdom"),
+            ];
+
+            for (skill_name, ability_score, ability_name) in skills {
+                let is_proficient = proficiencies.skills.contains(&skill_name.to_string());
+                if let Some(field_name) = self.field_mapper.get_pdf_field_name(skill_name) {
+                    let bonus_str = self.calculate_skill_safe(ability_score, character.level, is_proficient, ability_name);
                     fields.insert(field_name.clone(), bonus_str);
                 }
             }
@@ -431,17 +481,77 @@ impl PdfFiller {
         fields
     }
 
+    pub fn get_checkbox_fields(&self, character_data: &CharacterData) -> HashMap<String, bool> {
+        let mut checkboxes = HashMap::new();
+
+        // Saving throw proficiency checkboxes
+        if let Some(proficiencies) = &character_data.proficiencies {
+            let saves = [
+                ("strength", "strength_save_prof"),
+                ("dexterity", "dexterity_save_prof"), 
+                ("constitution", "constitution_save_prof"),
+                ("intelligence", "intelligence_save_prof"),
+                ("wisdom", "wisdom_save_prof"),
+                ("charisma", "charisma_save_prof"),
+            ];
+            
+            for (ability_name, checkbox_key) in saves {
+                let is_proficient = proficiencies.saving_throws.contains(&ability_name.to_string());
+                if let Some(checkbox_field) = self.field_mapper.get_pdf_field_name(checkbox_key) {
+                    checkboxes.insert(checkbox_field.clone(), is_proficient);
+                }
+            }
+
+            // Skill proficiency checkboxes
+            let skills = [
+                "acrobatics", "animal_handling", "arcana", "athletics", "deception",
+                "history", "insight", "intimidation", "investigation", "medicine",
+                "nature", "perception", "performance", "persuasion", "religion",
+                "sleight_of_hand", "stealth", "survival"
+            ];
+
+            for skill_name in skills {
+                let is_proficient = proficiencies.skills.contains(&skill_name.to_string());
+                let checkbox_key = format!("{}_prof", skill_name);
+                if let Some(checkbox_field) = self.field_mapper.get_pdf_field_name(&checkbox_key) {
+                    checkboxes.insert(checkbox_field.clone(), is_proficient);
+                }
+            }
+        }
+
+        checkboxes
+    }
+
     fn add_spell_fields_with_mapper(
         &self,
         fields: &mut HashMap<String, String>,
         level: u8,
         spells: &[crate::character_model::Spell],
     ) {
+        // Define maximum spell slots per level based on typical character sheet layout
+        let max_spells_per_level = match level {
+            0 => 8,  // Cantrips
+            1..=9 => 13, // Spell levels 1-9
+            _ => 0,
+        };
+
         for (index, spell) in spells.iter().enumerate() {
+            // Validate spell level matches expected level
+            if spell.level != level {
+                // Skip invalid spells but continue processing others
+                continue;
+            }
+
+            // Handle overflow: only process spells that fit in available slots
+            if index >= max_spells_per_level {
+                break; // Stop processing when we exceed available slots
+            }
+
             let spell_field = self.field_mapper.get_spell_field_name(level, index);
             fields.insert(spell_field, spell.name.clone());
 
-            if spell.prepared {
+            // Only mark preparation checkboxes for levels 1-9 (cantrips don't need preparation)
+            if spell.prepared && level > 0 {
                 let prepared_field = self.field_mapper.get_spell_prepared_checkbox(level, index);
                 fields.insert(prepared_field, "Yes".to_string());
             }
@@ -461,6 +571,48 @@ impl PdfFiller {
 
     fn calculate_modifier(&self, ability_score: u8) -> i8 {
         ((ability_score as i16 - 10) / 2) as i8
+    }
+
+    /// Calculate ability modifier with validation, returns "ERROR" string for invalid scores
+    fn calculate_modifier_safe(&self, ability_score: u8, ability_name: &str) -> String {
+        if let Err(_) = crate::dnd_validator::DndValidator::validate_ability_score_range(ability_score, ability_name) {
+            "ERROR".to_string()
+        } else {
+            let modifier = self.calculate_modifier(ability_score);
+            if modifier >= 0 {
+                format!("+{}", modifier)
+            } else {
+                modifier.to_string()
+            }
+        }
+    }
+
+    /// Calculate saving throw bonus with error handling
+    fn calculate_saving_throw_safe(&self, ability_score: u8, level: u8, is_proficient: bool, ability_name: &str) -> String {
+        if let Err(_) = crate::dnd_validator::DndValidator::validate_ability_score_range(ability_score, ability_name) {
+            "ERROR".to_string()
+        } else {
+            let bonus = crate::character_model::calculate_saving_throw_bonus(ability_score, level, is_proficient);
+            if bonus >= 0 {
+                format!("+{}", bonus)
+            } else {
+                bonus.to_string()
+            }
+        }
+    }
+
+    /// Calculate skill bonus with error handling
+    fn calculate_skill_safe(&self, ability_score: u8, level: u8, is_proficient: bool, ability_name: &str) -> String {
+        if let Err(_) = crate::dnd_validator::DndValidator::validate_ability_score_range(ability_score, ability_name) {
+            "ERROR".to_string()
+        } else {
+            let bonus = crate::character_model::calculate_skill_bonus(ability_score, level, is_proficient);
+            if bonus >= 0 {
+                format!("+{}", bonus)
+            } else {
+                bonus.to_string()
+            }
+        }
     }
 
     #[allow(dead_code)]
