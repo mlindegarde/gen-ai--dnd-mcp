@@ -36,16 +36,22 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Sort and print all field names
     field_names.sort();
     
-    // Look for our specific fields
-    println!("=== LOOKING FOR OUR FIELDS ===");
-    let search_terms = ["personality", "passive", "hd", "cp", "sp", "ep", "gp", "pp", "features", "traits"];
-    for term in &search_terms {
+    // Look for appearance-related fields
+    println!("=== SEARCHING FOR APPEARANCE/CHARACTER FIELDS ===");
+    let appearance_terms = ["appearance", "character", "portrait", "image", "picture", "feat", "age", "height", "weight", "eyes", "skin", "hair"];
+    for term in &appearance_terms {
         println!("\nFields containing '{}':", term);
         for field_name in &field_names {
             if field_name.to_lowercase().contains(term) {
                 println!("  '{}'", field_name);
             }
         }
+    }
+    
+    // Also show all fields for manual inspection
+    println!("\n=== ALL PDF FIELDS ===");
+    for (i, field_name) in field_names.iter().enumerate() {
+        println!("{}: '{}'", i + 1, field_name);
     }
     
     Ok(())
