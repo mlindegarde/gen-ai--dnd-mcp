@@ -16,6 +16,8 @@ A Model Context Protocol (MCP) server that fills D&D 5e character sheet PDFs wit
 
 ✅ **Spell Organization**: Properly organizes spells by level with prepared state tracking
 
+✅ **Windows Compatible**: Checkboxes visible, appropriate font sizing, and cross-platform debug logging
+
 ## Quick Start
 
 ### Test Mode
