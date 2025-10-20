@@ -1,10 +1,11 @@
 <!--
 Sync Impact Report:
-- Version change: 1.2.0 → 1.3.0
-- Modified principles: VII. Scope Limitations (expanded to include multi-classing)
+- Version change: 1.3.0 → 1.4.0
+- Modified principles: Testing Requirements → Testing Philosophy (hobby project, testing optional)
+- Modified principles: Development Workflow (removed test-first requirement)
 - Added sections: None
 - Removed sections: None
-- Templates requiring updates: ✅ All templates reviewed - no updates needed
+- Templates requiring updates: ✅ All templates reviewed - testing sections are optional
 - Follow-up TODOs: None
 -->
 
@@ -40,10 +41,14 @@ Only basic single-class character mechanics are supported. This limitation ensur
 
 ## Quality Standards
 
-### Testing Requirements
-- Unit tests for all calculation functions
-- Integration tests for PDF filling workflow  
-- Test coverage for edge cases (invalid classes, extreme ability scores)
+### Testing Philosophy (Hobby Project)
+This is a hobby project where formal testing is **OPTIONAL**. Developers should:
+- Focus on manual testing and verification
+- Run the program to validate changes work as expected
+- Skip unit/integration tests unless they personally find them helpful
+- Prioritize working code over test coverage
+
+Automated tests may exist but are not mandatory for feature completion.
 
 ### Performance Standards
 - PDF processing under 2 seconds for files under 5MB
@@ -58,18 +63,18 @@ Only basic single-class character mechanics are supported. This limitation ensur
 ## Development Workflow
 
 ### Implementation Order
-1. Tests first for new calculations
-2. Implement minimal viable functionality
+1. Implement minimal viable functionality
+2. Manual testing and verification
 3. Integrate with existing systems
-4. Add comprehensive error handling
+4. Add error handling as needed
 
-### Code Review Requirements
-- All changes must maintain backward compatibility
-- New features require corresponding tests
-- Performance impact must be measured
+### Code Review Standards
+- All changes should maintain backward compatibility when practical
+- Manual verification that features work as intended
+- Document any known limitations
 
 ## Governance
 
 This constitution supersedes all other practices. Changes require explicit documentation and migration plan. All implementations must verify compliance with these principles.
 
-**Version**: 1.3.0 | **Ratified**: 2025-10-15 | **Last Amended**: 2025-10-17
+**Version**: 1.4.0 | **Ratified**: 2025-10-15 | **Last Amended**: 2025-10-20
