@@ -9,10 +9,18 @@ use std::io::{self, BufRead, BufReader, Write};
 const PDF_TEMPLATE: &[u8] = include_bytes!("../docs/5E_CharacterSheet_Fillable.pdf");
 
 fn log_to_file(message: &str) {
+    use std::env;
+    use std::path::PathBuf;
+    
+    // Try project root first, fall back to temp directory
+    let log_path: PathBuf = env::current_dir()
+        .map(|d| d.join("mcp_debug.log"))
+        .unwrap_or_else(|_| env::temp_dir().join("dnd-mcp-debug.log"));
+    
     if let Ok(mut file) = OpenOptions::new()
         .create(true)
         .append(true)
-        .open("/Users/lindegar/learningplace/specify--test/mcp_debug.log")
+        .open(&log_path)
     {
         let _ = writeln!(
             file,
