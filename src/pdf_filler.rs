@@ -118,6 +118,19 @@ impl PdfFiller {
         let field_values = self.get_field_values(character_data);
         let checkbox_fields = self.get_checkbox_fields(character_data);
         
+        // Set NeedAppearances to true so PDF readers regenerate field appearances
+        // This is critical for checkbox visibility on Windows
+        if let Ok(catalog) = doc.catalog() {
+            if let Ok(acroform_ref) = catalog.get(b"AcroForm") {
+                if let Object::Reference(ref_id) = acroform_ref {
+                    if let Ok(Object::Dictionary(mut acroform_dict)) = doc.get_object(*ref_id).cloned() {
+                        acroform_dict.set(b"NeedAppearances", Object::Boolean(true));
+                        doc.objects.insert(*ref_id, Object::Dictionary(acroform_dict));
+                    }
+                }
+            }
+        }
+        
         // Fill text fields
         for (object_id, object) in doc.objects.clone() {
             if let Object::Dictionary(dict) = object {
