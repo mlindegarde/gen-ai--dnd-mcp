@@ -126,7 +126,14 @@ impl PdfFiller {
                     
                     if let Some(value) = field_values.get(field_name.as_ref()) {
                         let mut new_dict = dict.clone();
+                        
+                        // Set the field value
                         new_dict.set(b"V", Object::String(value.as_bytes().to_vec(), lopdf::StringFormat::Literal));
+                        
+                        // Set default appearance with appropriate font size
+                        let da_string = self.create_default_appearance(&field_name);
+                        new_dict.set(b"DA", Object::String(da_string.as_bytes().to_vec(), lopdf::StringFormat::Literal));
+                        
                         doc.objects.insert(object_id, Object::Dictionary(new_dict));
                     }
                 }
@@ -179,7 +186,15 @@ impl PdfFiller {
                     if let Some(&should_mark) = checkbox_fields.get(field_name.as_ref()) {
                         if should_mark {
                             let mut new_dict = dict.clone();
-                            new_dict.set(b"V", Object::String(b"Yes".to_vec(), lopdf::StringFormat::Literal));
+                            
+                            // Use Name objects instead of String for checkbox values
+                            // This is required by PDF spec for button fields
+                            new_dict.set(b"V", Object::Name(b"Yes".to_vec()));
+                            
+                            // Set appearance state to match the value
+                            // This tells PDF viewers which appearance to display
+                            new_dict.set(b"AS", Object::Name(b"Yes".to_vec()));
+                            
                             doc.objects.insert(object_id, Object::Dictionary(new_dict));
                         }
                     }
@@ -187,6 +202,39 @@ impl PdfFiller {
             }
         }
         Ok(())
+    }
+
+    /// Determine appropriate font size based on field name
+    fn get_font_size_for_field(&self, field_name: &str) -> u8 {
+        // Character name and player name - larger for readability
+        if field_name.contains("CharacterName") || field_name.contains("PlayerName") {
+            return 12;
+        }
+        
+        // Spell fields - smaller to fit more text
+        if field_name.starts_with("Spells") {
+            return 8;
+        }
+        
+        // Narrative fields - slightly smaller
+        if field_name.contains("Traits") || 
+           field_name.contains("Features") || 
+           field_name.contains("Ideals") ||
+           field_name.contains("Bonds") ||
+           field_name.contains("Flaws") {
+            return 9;
+        }
+        
+        // Default for all other fields
+        10
+    }
+
+    /// Create PDF default appearance string with font and size
+    fn create_default_appearance(&self, field_name: &str) -> String {
+        let font_size = self.get_font_size_for_field(field_name);
+        // Format: /FontName FontSize Tf Color
+        // /Helv = Helvetica, Tf = Text Font operator, 0 g = black
+        format!("/Helv {} Tf 0 g", font_size)
     }
 
     #[allow(dead_code)]
